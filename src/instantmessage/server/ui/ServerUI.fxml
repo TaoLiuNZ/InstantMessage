@@ -7,7 +7,7 @@
 <?import javafx.scene.text.TextFlow?>
 
 
-<GridPane prefHeight="450.0" prefWidth="500.0" styleClass="grid" stylesheets="@../../../../css/server.css" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8.0.111" fx:controller="instantmessage.client.ui.ServerUIController">
+<GridPane prefHeight="450.0" prefWidth="500.0" styleClass="grid" stylesheets="@../../../../css/server.css" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8.0.111" fx:controller="instantmessage.server.ui.ServerUIController">
    <rowConstraints>
       <RowConstraints minHeight="10.0" prefHeight="450.0" />
    </rowConstraints>

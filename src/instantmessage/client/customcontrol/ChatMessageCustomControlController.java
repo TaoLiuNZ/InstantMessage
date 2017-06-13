@@ -10,10 +10,12 @@ import instantmessage.client.viewmodel.UserTagViewModel;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.geometry.NodeOrientation;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
+import javafx.scene.paint.Paint;
 
 public class ChatMessageCustomControlController implements ICustomControlController{
 	@FXML private ImageView avatarImageView;
@@ -21,21 +23,23 @@ public class ChatMessageCustomControlController implements ICustomControlControl
 	@FXML private Label chatMessageLabel;
 	
 	@Override
-	public void setUIData(IViewModel viewModel){
+	public void setViewData(IViewModel viewModel){
 		ChatMessageViewModel chatMessageViewModel=(ChatMessageViewModel)viewModel;
 		FxUIHelper.setImage(avatarImageView, chatMessageViewModel.getPicUrl());
 		FxUIHelper.setText(displayNameLabel, chatMessageViewModel.getDisplayName());
-		FxUIHelper.setText(chatMessageLabel, chatMessageViewModel.getMsg());		
+		FxUIHelper.setText(chatMessageLabel, chatMessageViewModel.getMsg());
+		
+		// Set Orientation
+		setOrientation(chatMessageViewModel.getOrientation());
 	}
 	
-	public void setOrientation(Orientation orientation){
-		if(orientation==Orientation.RIGHT){
-			chatMessageLabel.getStyleClass().clear();
-			chatMessageLabel.getStyleClass().add("chat_message_reverse");
+	private void setOrientation(Orientation orientation){
+		if(orientation!=Orientation.RIGHT){
 			return;
 		}
-		chatMessageLabel.getStyleClass().clear();
-		chatMessageLabel.getStyleClass().add("chat_message");
+		chatMessageLabel.getParent().setNodeOrientation(NodeOrientation.RIGHT_TO_LEFT);
+		chatMessageLabel.getStyleClass().add("chat_message_reverse");
+		//chatMessageLabel.setStyle("-fx-text-fill:white");
 	}
 
 	

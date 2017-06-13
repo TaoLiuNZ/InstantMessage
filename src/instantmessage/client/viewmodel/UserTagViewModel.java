@@ -13,6 +13,9 @@ public class UserTagViewModel implements IViewModel{
 		this.setUid(user.getUid());
 		this.setDisplayName(user.getDisplayName());
 		this.setIpAddress(user.getIpAddress());
+		this.setPicUrl(user.getPicUrl());
+		this.setIpAddress(user.getIpAddress());
+		this.setIsBlocked(false);
 		}
 
 	/**
@@ -47,7 +50,7 @@ public class UserTagViewModel implements IViewModel{
 	 * @return the ipAddress
 	 */
 	public String getIpAddress() {
-		return ipAddress;
+		return "IP:"+ipAddress.substring(1);
 	}
 
 	/**

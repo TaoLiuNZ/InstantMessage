@@ -20,7 +20,7 @@ public class UserTagCustomControlController implements ICustomControlController{
 	@FXML private CheckBox blockCheckBox;
 	private UserTagViewModel userTagViewModel;
 	
-	public void setUIData(IViewModel viewModel){
+	public void setViewData(IViewModel viewModel){
 		UserTagViewModel userTagViewModel=(UserTagViewModel)viewModel;
 		this.userTagViewModel=userTagViewModel;
 		
@@ -30,7 +30,7 @@ public class UserTagCustomControlController implements ICustomControlController{
 	}
 	
 	@FXML
-	private void blockCheckBox(ActionEvent event){
+	private void blockCheckBoxAction(ActionEvent event){
 		if(blockCheckBox.isSelected()){
 			FxUIHelper.setText(blockCheckBox, "Blocked");	
 			userTagViewModel.setIsBlocked(true);

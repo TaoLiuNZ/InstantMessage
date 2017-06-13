@@ -8,30 +8,14 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.layout.GridPane;
 
 public class UserTagCustomControl extends CustomControl{
-	private FXMLLoader fxmlLoader;
-	private UserTagViewModel userTagViewModel;
-	
-	 public UserTagCustomControl(UserTagViewModel userTagViewModel) {
-		 // Load UI
-	        loadUI("UserTagCustomControl.fxml");
-	        
-	        // Set UI info
-	        setUIInfo(userTagViewModel);
-	    }
-	 
 
-		@Override
-		protected void setUIInfo(IViewModel viewModel) {
-			getController().setUIData((UserTagViewModel) userTagViewModel);
-			
-		}
+	public UserTagCustomControl(IViewModel viewModel) {
+		super(viewModel);
+	}
 
-
-		@Override
-		protected ICustomControlController getController() {
-			return (UserTagCustomControlController)fxmlLoader.getController();
-		}
-
-
+	@Override
+	protected String setFXMLPath() {
+		return "UserTagCustomControl.fxml";
+	}
 	 
 }

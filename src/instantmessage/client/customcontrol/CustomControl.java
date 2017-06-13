@@ -6,11 +6,16 @@ import instantmessage.client.viewmodel.IViewModel;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.layout.GridPane;
 
-public abstract class CustomControl extends GridPane{
+public abstract class CustomControl extends GridPane {
 	protected  FXMLLoader fxmlLoader;
 
-	 protected abstract void setUIInfo(IViewModel viewModel);
-	 
+	public CustomControl(IViewModel viewModel){
+		loadUI(setFXMLPath());
+		setViewData(viewModel);
+	}
+	
+	protected abstract String setFXMLPath();
+
 	 protected void loadUI(String fxmlPath){
 		 fxmlLoader = new FXMLLoader(getClass().getResource(fxmlPath));
 	        fxmlLoader.setRoot(this);
@@ -21,6 +26,13 @@ public abstract class CustomControl extends GridPane{
 	            throw new RuntimeException(exception);
 	        }
 	 }
-	 
-	 protected abstract ICustomControlController getController();
+		protected void setViewData(IViewModel viewModel) {
+			getController().setViewData(viewModel);
+			
+		}
+		
+		protected ICustomControlController getController() {
+			return (ICustomControlController)fxmlLoader.getController();
+		}
+
 }

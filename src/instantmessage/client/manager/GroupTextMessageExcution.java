@@ -20,6 +20,7 @@ public class GroupTextMessageExcution implements IMessageExcution {
 		String msg=((GroupTextMessage)message).getMsg();
 		
 		// Send
+		MessageManager.sendLong(socket, message.getMessageType());
 		MessageManager.sendText(socket, uid);
 		MessageManager.sendText(socket, msg);
 	}
@@ -28,14 +29,15 @@ public class GroupTextMessageExcution implements IMessageExcution {
 	public void handleMessageFromServer(Socket socket,IUIController controller) {
 		// Get info
 		String uid=MessageManager.receiveText(socket);
-		String msg=MessageManager.receiveText(socket);
-		
+		String msg=MessageManager.receiveText(socket);		
 
 		// Send to UI Controller to handle
 		GroupChatUIController groupChatUIController=(GroupChatUIController)controller;
 		
 		// User
 		User user=UserManager.FindUserById(uid);
+		
+		// Check if user is blocked
 		
 		// View model
 		ChatMessageViewModel viewModel=new ChatMessageViewModel(user,msg);

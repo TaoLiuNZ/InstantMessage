@@ -6,7 +6,6 @@ public class User {
 	private String displayName;
 	private String picUrl;
 	private String ipAddress;
-	private Boolean isBlocked;
 	
 	public User(String uid, String displayName,String picUrl){
 		this.setUid(uid);
@@ -66,19 +65,6 @@ public class User {
 		this.ipAddress = ipAddress;
 	}
 
-	/**
-	 * @return the isBlocked
-	 */
-	public Boolean getIsBlocked() {
-		return isBlocked;
-	}
-
-	/**
-	 * @param isBlocked the isBlocked to set
-	 */
-	public void setIsBlocked(Boolean isBlocked) {
-		this.isBlocked = isBlocked;
-	}
 	
 }
 

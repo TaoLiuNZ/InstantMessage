@@ -1,6 +1,7 @@
 package instantmessage.client.helper;
 
 import java.io.File;
+import java.io.IOException;
 
 import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
@@ -26,9 +27,13 @@ public class FxUIHelper {
 	public static void setImage(ImageView imageView,String picUrl){
 		Platform.runLater(new Runnable() {
             @Override public void run() {
-            	imageView.setImage(new Image(new File(picUrl).toURI().toString()));
+            	imageView.setImage(new Image(new File("image/"+picUrl).toURI().toString()));
             }
         });
+	}
+	
+	public static void setVisible(Node node,Boolean visible){
+		node.setVisible(visible);
 	}
 	
 	public static void addElementToParent(Pane parent,Node child){
@@ -42,16 +47,28 @@ public class FxUIHelper {
 	}
 	
 	public static void openNewWindow(Object obj,String fxmlPath){
+		showWindow(obj,new Stage(),fxmlPath);
+	}
+	
+	public static FXMLLoader switchScene(Object obj,Node node,String fxmlPath){
+		Stage stage=(Stage)node.getScene().getWindow();				
+		return showWindow(obj,stage,fxmlPath);
+	}
+	
+	
+	private static FXMLLoader showWindow(Object object,Stage stage,String fxmlPath){
+
+		FXMLLoader fxmlLoader = new FXMLLoader(object.getClass().getResource(fxmlPath));
+		Parent root = null;
 		try {
-			FXMLLoader fxmlLoader = new FXMLLoader(obj.getClass().getResource(fxmlPath));
-			Parent root = (Parent) fxmlLoader.load();
-            Stage stage = new Stage();
-			Scene scene = new Scene(root);
-			stage.setScene(scene);
-			stage.show();
-		} catch(Exception e) {
+			root = (Parent) fxmlLoader.load();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		Scene scene = new Scene(root);
+		stage.setScene(scene);
+		stage.show();
+		return fxmlLoader;
 	}
-
 }

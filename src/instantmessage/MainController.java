@@ -16,11 +16,11 @@ public class MainController {
 	@FXML
 	private void startServerBtnAction(ActionEvent event){
 
-		FxUIHelper.openNewWindow(this,"ServerUI.fxml");
+		FxUIHelper.openNewWindow(this,"/instantmessage/server/ui/ServerUI.fxml");
 	}
 	@FXML
 	private void addAClientBtnAction(ActionEvent event){
-		FxUIHelper.openNewWindow(this,"LoginUI.fxml");
+		FxUIHelper.openNewWindow(this,"/instantmessage/client/ui/LoginUI.fxml");
 	}
 	
 	

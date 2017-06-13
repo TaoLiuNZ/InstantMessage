@@ -30,9 +30,9 @@
             <Label text="User Name :" textAlignment="CENTER" GridPane.halignment="LEFT" GridPane.rowIndex="2" GridPane.valignment="CENTER" />
             <Label text="Password :" GridPane.halignment="LEFT" GridPane.rowIndex="3" GridPane.valignment="CENTER" />
             <Button fx:id="loginBtn" mnemonicParsing="false" onAction="#loginBtnAction" styleClass="card-button" text="Sign In" GridPane.columnSpan="2" GridPane.halignment="CENTER" GridPane.rowIndex="5" GridPane.valignment="CENTER" />
-            <TextField text="chris" GridPane.columnIndex="1" GridPane.rowIndex="2" GridPane.valignment="BOTTOM" />
-            <PasswordField text="chris" GridPane.columnIndex="1" GridPane.rowIndex="3" GridPane.valignment="BOTTOM" />
-            <Label style="-fx-text-fill: red;" text="Label" GridPane.columnSpan="2" GridPane.rowIndex="4" />
+            <TextField fx:id="userNameTextField" text="chris" GridPane.columnIndex="1" GridPane.rowIndex="2" GridPane.valignment="BOTTOM" />
+            <PasswordField fx:id="passwordTextField" text="chris" GridPane.columnIndex="1" GridPane.rowIndex="3" GridPane.valignment="BOTTOM" />
+            <Label fx:id="errorLabel" style="-fx-text-fill: red;" text="Label" visible="false" GridPane.columnSpan="2" GridPane.rowIndex="4" />
          </children>
       </GridPane>
    </center>
