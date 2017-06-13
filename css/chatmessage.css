@@ -1,0 +1,13 @@
+.chat_message{
+
+-fx-background-color: #E7E7EB; 
+-fx-text-fill: black;
+
+}
+
+.chat_message_reverse{
+
+-fx-background-color: #6F729B; 
+-fx-text-fill: white;
+
+}

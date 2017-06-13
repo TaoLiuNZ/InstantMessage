@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.text.TextFlow?>
+
+
+<GridPane prefHeight="450.0" prefWidth="500.0" styleClass="grid" stylesheets="@../../../../css/server.css" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8.0.111" fx:controller="instantmessage.client.ui.ServerUIController">
+   <rowConstraints>
+      <RowConstraints minHeight="10.0" prefHeight="450.0" />
+   </rowConstraints>
+   <columnConstraints>
+      <ColumnConstraints minWidth="10.0" prefWidth="500.0" />
+   </columnConstraints>
+   <children>
+      <TextFlow fx:id="textFlow" prefHeight="200.0" prefWidth="200.0" styleClass="textflow" stylesheets="@../../../../css/server.css">
+         <padding>
+            <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
+         </padding>
+      </TextFlow>
+   </children>
+</GridPane>
