@@ -10,6 +10,8 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 
 public class LoginUIController implements IUIController {
 
@@ -19,6 +21,16 @@ public class LoginUIController implements IUIController {
 	
 	@FXML
 	private void loginBtnAction(ActionEvent event){
+		login();
+	}
+	
+	@FXML private void passwordTextFieldKeyPressed(KeyEvent event){
+		if(event.getCode()==KeyCode.ENTER){
+			login();
+		}
+	}
+	
+	private void login(){
 		// Get user name and password
 		String userName=userNameTextField.getText();
 		String password=passwordTextField.getText();

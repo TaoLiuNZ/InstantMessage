@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.Cursor?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.RowConstraints?>
+
+<fx:root nodeOrientation="LEFT_TO_RIGHT" stylesheets="@../../../../css/chatmessage.css" type="GridPane" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="instantmessage.client.customcontrol.ChatImageMessageCustomControlController">
+   <rowConstraints>
+      <RowConstraints minHeight="20.0" prefHeight="20.0" />
+      <RowConstraints />
+   </rowConstraints>
+   <columnConstraints>
+      <ColumnConstraints hgrow="NEVER" minWidth="10.0" prefWidth="50.0" />
+      <ColumnConstraints />
+   </columnConstraints>
+   <children>
+      <ImageView fx:id="avatarImageView" fitHeight="40.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true" GridPane.halignment="LEFT" GridPane.rowSpan="2" GridPane.valignment="TOP">
+         <image>
+            <Image url="@../../../../image/chris.png" />
+         </image>
+      </ImageView>
+      <Label fx:id="displayNameLabel" text="Chris" GridPane.columnIndex="1" GridPane.halignment="LEFT" GridPane.valignment="CENTER" />
+      <GridPane fx:id="chatMessageContainer" maxHeight="200.0" onMouseClicked="#chatMessageContainerMouseClicked" style="-fx-background-radius: 0 20 20 20; -fx-padding: 10;" styleClass="chat_message" stylesheets="@../../../../css/chatmessage.css" GridPane.columnIndex="1" GridPane.rowIndex="1">
+        <columnConstraints>
+          <ColumnConstraints />
+        </columnConstraints>
+        <rowConstraints>
+          <RowConstraints maxHeight="200.0" />
+        </rowConstraints>
+         <children>
+            <ImageView fx:id="imageView" fitHeight="200.0" fitWidth="300.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../../../../../Downloads/paul.png" />
+               </image></ImageView>
+         </children>
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+      </GridPane>
+   </children>
+   <padding>
+      <Insets bottom="10.0" />
+   </padding>
+</fx:root>

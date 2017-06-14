@@ -4,35 +4,50 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.PasswordField?>
 <?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.RowConstraints?>
 
-
-<BorderPane prefHeight="450.0" prefWidth="500.0" stylesheets="@../../../../css/main.css" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="instantmessage.client.ui.LoginUIController">
+<BorderPane minHeight="400.0" minWidth="500.0" stylesheets="@../../../../css/login.css" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="instantmessage.client.ui.LoginUIController">
    <center>
-      <GridPane alignment="CENTER" BorderPane.alignment="CENTER">
+      <GridPane alignment="CENTER" styleClass="card" vgap="10.0" BorderPane.alignment="CENTER">
          <rowConstraints>
             <RowConstraints minHeight="10.0" />
-            <RowConstraints minHeight="10.0" prefHeight="10.0" />
             <RowConstraints minHeight="10.0" />
             <RowConstraints minHeight="10.0" />
             <RowConstraints minHeight="10.0" />
             <RowConstraints minHeight="10.0" />
          </rowConstraints>
          <columnConstraints>
-            <ColumnConstraints minWidth="10.0" prefWidth="80.0" />
-            <ColumnConstraints minWidth="10.0" prefWidth="100.0" />
+            <ColumnConstraints minWidth="10.0" prefWidth="250.0" />
+            <ColumnConstraints />
          </columnConstraints>
          <children>
-            <Label styleClass="card-title" text="Sign In" GridPane.columnSpan="2" GridPane.halignment="CENTER" GridPane.valignment="CENTER" />
-            <Label text="User Name :" textAlignment="CENTER" GridPane.halignment="LEFT" GridPane.rowIndex="2" GridPane.valignment="CENTER" />
-            <Label text="Password :" GridPane.halignment="LEFT" GridPane.rowIndex="3" GridPane.valignment="CENTER" />
-            <Button fx:id="loginBtn" mnemonicParsing="false" onAction="#loginBtnAction" styleClass="card-button" text="Sign In" GridPane.columnSpan="2" GridPane.halignment="CENTER" GridPane.rowIndex="5" GridPane.valignment="CENTER" />
-            <TextField fx:id="userNameTextField" text="chris" GridPane.columnIndex="1" GridPane.rowIndex="2" GridPane.valignment="BOTTOM" />
-            <PasswordField fx:id="passwordTextField" text="chris" GridPane.columnIndex="1" GridPane.rowIndex="3" GridPane.valignment="BOTTOM" />
-            <Label fx:id="errorLabel" style="-fx-text-fill: red;" text="Label" visible="false" GridPane.columnSpan="2" GridPane.rowIndex="4" />
+            <Button fx:id="loginBtn" mnemonicParsing="false" onAction="#loginBtnAction" prefWidth="250.0" styleClass="button-flat" text="Sign In" GridPane.columnSpan="2" GridPane.halignment="CENTER" GridPane.rowIndex="4" GridPane.valignment="CENTER" />
+            <TextField fx:id="userNameTextField" promptText="User Name" text="chris" GridPane.rowIndex="1" GridPane.valignment="BOTTOM" />
+            <PasswordField fx:id="passwordTextField" onKeyPressed="#passwordTextFieldKeyPressed" promptText="Password" text="chris" GridPane.rowIndex="2" GridPane.valignment="BOTTOM" />
+            <Label fx:id="errorLabel" style="-fx-text-fill: red;" text="Label" visible="false" GridPane.columnSpan="2" GridPane.rowIndex="3" />
+            <GridPane hgap="10.0">
+              <columnConstraints>
+                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" />
+                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" />
+                  <ColumnConstraints />
+              </columnConstraints>
+              <rowConstraints>
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+              </rowConstraints>
+               <children>
+                  <Label styleClass="title" text="Group Chat" GridPane.columnIndex="1" GridPane.columnSpan="2" GridPane.halignment="LEFT" GridPane.valignment="CENTER" />
+                  <ImageView fitHeight="25.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true" GridPane.halignment="RIGHT">
+                     <image>
+                        <Image url="@../../../../image/chat.png" />
+                     </image>
+                  </ImageView>
+               </children>
+            </GridPane>
          </children>
       </GridPane>
    </center>

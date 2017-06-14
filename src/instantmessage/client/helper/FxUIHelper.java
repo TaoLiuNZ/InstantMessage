@@ -27,9 +27,13 @@ public class FxUIHelper {
 	public static void setImage(ImageView imageView,String picUrl){
 		Platform.runLater(new Runnable() {
             @Override public void run() {
-            	imageView.setImage(new Image(new File("image/"+picUrl).toURI().toString()));
+            	imageView.setImage(new Image(new File(picUrl).toURI().toString()));
             }
         });
+	}
+	
+	public static void setAvatarImage(ImageView imageView,String picUrl){
+		setImage(imageView,"image/"+picUrl);
 	}
 	
 	public static void setVisible(Node node,Boolean visible){

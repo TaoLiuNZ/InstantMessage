@@ -24,7 +24,7 @@ public class UserTagCustomControlController implements ICustomControlController{
 		UserTagViewModel userTagViewModel=(UserTagViewModel)viewModel;
 		this.userTagViewModel=userTagViewModel;
 		
-		FxUIHelper.setImage(avatarImageView, userTagViewModel.getPicUrl());
+		FxUIHelper.setAvatarImage(avatarImageView, userTagViewModel.getPicUrl());
 		FxUIHelper.setText(displayNameLabel, userTagViewModel.getDisplayName());
 		FxUIHelper.setText(ipAddressLabel, userTagViewModel.getIpAddress());		
 	}

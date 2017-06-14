@@ -12,15 +12,15 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
 
-<GridPane alignment="CENTER" minHeight="450.0" minWidth="500.0" style="-fx-background-color: white; -fx-border-color: #F4F5FC;" stylesheets="@../../../../css/main.css" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="instantmessage.client.ui.GroupChatUIController">
+<GridPane alignment="CENTER" style="-fx-background-color: white; -fx-border-color: #F4F5FC;" stylesheets="@../../../../css/main.css" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="instantmessage.client.ui.GroupChatUIController">
    <rowConstraints>
       <RowConstraints maxHeight="-Infinity" minHeight="50.0" prefHeight="50.0" vgrow="ALWAYS" />
-      <RowConstraints minHeight="350.0" vgrow="ALWAYS" />
+      <RowConstraints minHeight="300.0" vgrow="ALWAYS" />
       <RowConstraints maxHeight="-Infinity" minHeight="50.0" prefHeight="50.0" vgrow="ALWAYS" />
    </rowConstraints>
    <columnConstraints>
       <ColumnConstraints hgrow="ALWAYS" maxWidth="-Infinity" minWidth="100.0" prefWidth="100.0" />
-      <ColumnConstraints hgrow="ALWAYS" minWidth="400.0" />
+      <ColumnConstraints hgrow="ALWAYS" minWidth="400.0" prefWidth="400.0" />
    </columnConstraints>
    <children>
       <ScrollPane hbarPolicy="NEVER" prefHeight="200.0" prefWidth="200.0" style="-fx-background: #ECEBF9; -fx-background-color: #ECEBF9;" GridPane.rowIndex="1" GridPane.rowSpan="2">
@@ -32,9 +32,9 @@
             </VBox>
          </content>
       </ScrollPane>
-      <ScrollPane fx:id="chatMessageContainerScrollPane" fitToHeight="true" fitToWidth="true" hbarPolicy="NEVER" minWidth="500.0" GridPane.columnIndex="1" GridPane.hgrow="ALWAYS" GridPane.rowIndex="1">
+      <ScrollPane fx:id="chatMessageContainerScrollPane" fitToHeight="true" fitToWidth="true" hbarPolicy="NEVER" minWidth="400.0" GridPane.columnIndex="1" GridPane.hgrow="ALWAYS" GridPane.rowIndex="1">
          <content>
-            <VBox fx:id="chatMessageContainerVBox" minWidth="400.0">
+            <VBox fx:id="chatMessageContainerVBox">
                <padding>
                   <Insets left="10.0" right="10.0" top="10.0" />
                </padding>

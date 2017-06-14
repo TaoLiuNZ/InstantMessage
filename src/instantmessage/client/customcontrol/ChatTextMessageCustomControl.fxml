@@ -8,7 +8,7 @@
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.RowConstraints?>
 
-<fx:root nodeOrientation="LEFT_TO_RIGHT" stylesheets="@../../../../css/chatmessage.css" type="GridPane" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="instantmessage.client.customcontrol.ChatMessageCustomControlController">
+<fx:root nodeOrientation="LEFT_TO_RIGHT" stylesheets="@../../../../css/chatmessage.css" type="GridPane" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="instantmessage.client.customcontrol.ChatTextMessageCustomControlController">
    <rowConstraints>
       <RowConstraints minHeight="20.0" prefHeight="20.0" />
       <RowConstraints />

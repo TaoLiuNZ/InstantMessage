@@ -10,7 +10,7 @@ import instantmessage.client.model.SetupAddGroupMemberMessage;
 import instantmessage.client.model.User;
 import instantmessage.client.ui.GroupChatUIController;
 import instantmessage.client.ui.IUIController;
-import instantmessage.client.viewmodel.ChatMessageViewModel;
+import instantmessage.client.viewmodel.ChatTextMessageViewModel;
 import instantmessage.client.viewmodel.UserTagViewModel;
 
 public class SetupAddGroupMemberMessageExcution implements IMessageExcution {

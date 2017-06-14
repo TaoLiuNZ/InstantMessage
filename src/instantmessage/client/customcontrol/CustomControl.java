@@ -8,7 +8,11 @@ import javafx.scene.layout.GridPane;
 
 public abstract class CustomControl extends GridPane {
 	protected  FXMLLoader fxmlLoader;
-
+	protected IViewModel viewModel;
+	
+	public CustomControl() {
+		loadUI(setFXMLPath());
+	}
 	public CustomControl(IViewModel viewModel){
 		loadUI(setFXMLPath());
 		setViewData(viewModel);
@@ -26,7 +30,7 @@ public abstract class CustomControl extends GridPane {
 	            throw new RuntimeException(exception);
 	        }
 	 }
-		protected void setViewData(IViewModel viewModel) {
+		public void setViewData(IViewModel viewModel) {
 			getController().setViewData(viewModel);
 			
 		}

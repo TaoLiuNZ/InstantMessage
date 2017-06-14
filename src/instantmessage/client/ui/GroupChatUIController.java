@@ -1,5 +1,6 @@
 package instantmessage.client.ui;
 
+import java.io.File;
 import java.io.IOException;
 import java.net.Socket;
 import java.net.UnknownHostException;
@@ -7,17 +8,27 @@ import java.util.HashMap;
 
 import javax.swing.event.ChangeEvent;
 
+import instantmessage.client.constant.ChatMessageViewModelType;
 import instantmessage.client.constant.Orientation;
+import instantmessage.client.customcontrol.ChatFileMessageCustomControl;
+import instantmessage.client.customcontrol.ChatImageMessageCustomControl;
 import instantmessage.client.customcontrol.ChatMessageCustomControl;
+import instantmessage.client.customcontrol.ChatTextMessageCustomControl;
+import instantmessage.client.customcontrol.CustomControl;
 import instantmessage.client.customcontrol.UserTagCustomControl;
 import instantmessage.client.handler.MessageFromServerHandler;
 import instantmessage.client.helper.FxUIHelper;
+import instantmessage.client.manager.ChatMessageCustomControlManager;
 import instantmessage.client.manager.MessageManager;
+import instantmessage.client.model.GroupFileMessage;
 import instantmessage.client.model.GroupTextMessage;
 import instantmessage.client.model.Message;
 import instantmessage.client.model.SetupAddGroupMemberMessage;
 import instantmessage.client.model.User;
+import instantmessage.client.viewmodel.ChatFileMessageViewModel;
+import instantmessage.client.viewmodel.ChatImageMessageViewModel;
 import instantmessage.client.viewmodel.ChatMessageViewModel;
+import instantmessage.client.viewmodel.ChatTextMessageViewModel;
 import instantmessage.client.viewmodel.UserTagViewModel;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
@@ -31,6 +42,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.VBox;
+import javafx.stage.FileChooser;
 
 public class GroupChatUIController implements IUIController{
 @FXML private ImageView avatarImageView;
@@ -67,7 +79,7 @@ private void SetListeners(){
 		
 		// Current user
 		this.currentUser=currentUser;
-		FxUIHelper.setImage(avatarImageView, currentUser.getPicUrl());
+		FxUIHelper.setAvatarImage(avatarImageView, currentUser.getPicUrl());
 		FxUIHelper.setText(displayNameLabel, currentUser.getDisplayName());
 				
 	}
@@ -107,10 +119,12 @@ private void SetListeners(){
 			viewModel.setOrientation(Orientation.RIGHT);
 		}
 		
-		ChatMessageCustomControl chatMsg=new ChatMessageCustomControl(viewModel);
+		// Message custom control
+		ChatMessageCustomControl chatMsg=ChatMessageCustomControlManager.getChatMessageCustomControlByType(viewModel);
 		FxUIHelper.addElementToParent(chatMessageContainerVBox, chatMsg);
 	}
 	
+
 	public void addTagUser(UserTagViewModel viewModel){
 		// Add to group members list
 		groupMembers.put(viewModel.getUid(), viewModel);
@@ -160,6 +174,19 @@ private void SetListeners(){
 	
 	
 	@FXML private void fileBtnAction(ActionEvent event){
-		
+		// File chooser
+		FileChooser fileChooser = new FileChooser();
+		File selectedFile = fileChooser.showOpenDialog(null);
+
+		if (selectedFile != null) {
+
+		    GroupFileMessage message=new GroupFileMessage(currentUser.getUid(),selectedFile.getPath());
+		    MessageManager.getMessageExcutionByType(message.getMessageType()).sendMessageToServer(socket, message);
+		}
+		else {
+		    
+		}
+		// Set focus back to text field
+		messageToSendTextField.requestFocus();
 	}
 }

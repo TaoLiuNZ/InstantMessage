@@ -1,30 +1,33 @@
 package instantmessage.client.viewmodel;
 
+import instantmessage.client.constant.ChatMessageViewModelType;
 import instantmessage.client.constant.Orientation;
 import instantmessage.client.model.User;
 
-public class ChatMessageViewModel implements IViewModel{
+public abstract class ChatMessageViewModel implements IViewModel{
 	private String uid;
 	private String picUrl;
 	private String displayName;
-	private String msg;
 	private Orientation orientation;
+	private ChatMessageViewModelType viewModelType;
 	
-	public ChatMessageViewModel(String uid,String picUrl,String displayName,String msg){
+	public ChatMessageViewModel(String uid,String picUrl,String displayName){
 		this.setUid(uid);
 		this.setPicUrl(picUrl);
 		this.setDisplayName(displayName);
-		this.setMsg(msg);
 		this.setOrientation(Orientation.LEFT);
+		this.viewModelType=setViewModelType();
 	}
 	
-	public ChatMessageViewModel(User user,String msg){
-		this.setUid(user.getUid());
-		this.setPicUrl(user.getPicUrl());
-		this.setDisplayName(user.getDisplayName());
-		this.setMsg(msg);
-		this.setOrientation(Orientation.LEFT);
+	public ChatMessageViewModelType getViewModelType() {
+		return viewModelType;
 	}
+
+	public ChatMessageViewModel(User user){
+		this(user.getUid(),user.getPicUrl(),user.getDisplayName());
+	}
+	
+	public abstract ChatMessageViewModelType setViewModelType();
 	
 	/**
 	 * @return the uid
@@ -62,19 +65,6 @@ public class ChatMessageViewModel implements IViewModel{
 	public void setDisplayName(String displayName) {
 		this.displayName = displayName;
 	}
-	/**
-	 * @return the msg
-	 */
-	public String getMsg() {
-		return msg;
-	}
-	/**
-	 * @param msg the msg to set
-	 */
-	public void setMsg(String msg) {
-		this.msg = msg;
-	}
-
 	/**
 	 * @return the orientation
 	 */

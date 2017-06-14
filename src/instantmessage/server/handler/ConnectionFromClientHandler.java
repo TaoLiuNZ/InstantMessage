@@ -29,8 +29,12 @@ public void run()
     	// Check type
     	long messageType=MessageManager.receiveLong(socket);   	
   
+    	try{
 		// Call MessageExcution to handle message from client
     	MessageManager.getMessageExcutionByType(messageType).handleMessageFromClient(socket,controller);
+    	}catch(Exception e){
+    		e.printStackTrace();
+    	}
     }
 
 }

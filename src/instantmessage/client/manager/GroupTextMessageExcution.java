@@ -9,7 +9,7 @@ import instantmessage.client.model.Message;
 import instantmessage.client.model.User;
 import instantmessage.client.ui.GroupChatUIController;
 import instantmessage.client.ui.IUIController;
-import instantmessage.client.viewmodel.ChatMessageViewModel;
+import instantmessage.client.viewmodel.ChatTextMessageViewModel;
 
 public class GroupTextMessageExcution implements IMessageExcution {
 
@@ -40,7 +40,7 @@ public class GroupTextMessageExcution implements IMessageExcution {
 		// Check if user is blocked
 		
 		// View model
-		ChatMessageViewModel viewModel=new ChatMessageViewModel(user,msg);
+		ChatTextMessageViewModel viewModel=new ChatTextMessageViewModel(user,msg);
 		
 		groupChatUIController.addChatMessage(viewModel);
 			

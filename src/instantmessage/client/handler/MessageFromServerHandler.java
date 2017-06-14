@@ -22,9 +22,12 @@ public MessageFromServerHandler(Socket socket,IUIController controller){
                // Check type
             	long messageType=MessageManager.receiveLong(socket);
             	
-          
+          try{
 				// Call MessageExcution to handle message from server
             	MessageManager.getMessageExcutionByType(messageType).handleMessageFromServer(socket,controller);
+          }catch(Exception e){
+        	  e.printStackTrace();
+          }
             }
         }
 
