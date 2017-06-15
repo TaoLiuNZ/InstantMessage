@@ -1,33 +1,29 @@
 package instantmessage.client.model;
 
-import instantmessage.client.constant.MessageType;
 import instantmessage.client.constant.MessageTypeCombination;
-import instantmessage.client.helper.EnumHelper;
 
+/**
+ * GroupFileMessage model
+ * @author Tao Liu
+ *
+ */
 public class GroupFileMessage extends Message {
+	
+	// private fields
 	private String filePath;
 
-	public GroupFileMessage(String senderUid,String filePath) {
-	super(
-			MessageTypeCombination.GROUP_FILE_MESSAGE, 
-			senderUid);
-		
-	this.setFilePath(filePath);
+	// Constructor
+	public GroupFileMessage(String senderUid, String filePath) {
+		super(MessageTypeCombination.GROUP_FILE_MESSAGE, senderUid);
+		this.setFilePath(filePath);
 	}
-
-	/**
-	 * @return the filePath
-	 */
+	
+	// Getters and setters
 	public String getFilePath() {
 		return filePath;
 	}
-
-	/**
-	 * @param msg the filePath to set
-	 */
 	public void setFilePath(String filePath) {
 		this.filePath = filePath;
 	}
-
 
 }

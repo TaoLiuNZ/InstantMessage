@@ -1,7 +1,11 @@
 .textflow Text{
 	-fx-fill:white ;
+	-fx-font-size:14px;
 }
 
-.grid{
-	-fx-background-color:black;
+
+
+.scroll-pane{
+	-fx-background-color:#013686;
+	
 }

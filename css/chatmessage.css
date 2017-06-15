@@ -1,13 +1,18 @@
 .chat_message{
 
--fx-background-color: #E7E7EB; 
--fx-text-fill: black;
-
-
+-fx-background-color:#f1f0f0 !important;
+-fx-border-width:0.0 !important; 
 }
 
 .chat_message_reverse{
 
--fx-background-color: #4DC9FF; 
-}
+-fx-background-color: #4DC9FF !important; 
+	-fx-border-width:0.0 !important; }
 
+.chat_message:hover {
+    -fx-background-color: #d4d3d3 !important;
+}
+.chat_message_reverse:hover{
+
+-fx-background-color: #1fb1ef !important; 
+}

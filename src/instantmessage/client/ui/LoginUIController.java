@@ -13,55 +13,79 @@ import javafx.scene.control.TextField;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 
+/**
+ * Controller for LoginUI
+ * 
+ * @author Tao Liu
+ *
+ */
 public class LoginUIController implements IUIController {
 
-	@FXML private TextField userNameTextField;
-	@FXML private TextField passwordTextField;
-	@FXML private Label errorLabel;
-	
+	// Fields
 	@FXML
-	private void loginBtnAction(ActionEvent event){
-		login();
-	}
-	
-	@FXML private void passwordTextFieldKeyPressed(KeyEvent event){
-		if(event.getCode()==KeyCode.ENTER){
-			login();
-		}
-	}
-	
-	private void login(){
+	private TextField userNameTextField;
+	@FXML
+	private TextField passwordTextField;
+	@FXML
+	private Label errorLabel;
+
+	/**
+	 * Sign in the user
+	 */
+	private void login() {
+
 		// Get user name and password
-		String userName=userNameTextField.getText();
-		String password=passwordTextField.getText();
-		
+		LoginViewModel viewModel = new LoginViewModel(userNameTextField.getText(), passwordTextField.getText());
+
 		// Validate
-		if(userName.isEmpty()||password.isEmpty()){
-			// Display error message
-			displayErrorMessage( ViewConstant.ERROR_USERNAME_PASSWORD_REQUIRED);
+		if (viewModel.getUserName().isEmpty() || viewModel.getPassword().isEmpty()) {
+			displayErrorMessage(ViewConstant.ERROR_USERNAME_PASSWORD_REQUIRED);
 			return;
 		}
-		
-		LoginViewModel viewModel=new LoginViewModel(userName,password);
-		
+
 		// Verify
-		User user=UserManager.VerifyUser(viewModel);
-		if(user!=null){
-			// Switch to  group chat window
-			FXMLLoader vxmlLoader=FxUIHelper.switchScene(this,userNameTextField, "/instantmessage/client/ui/GroupChatUI.fxml");
-			
-			// Set current user to group chat window
-			GroupChatUIController controller=vxmlLoader.getController();
-			controller.Init(user);
+		User user = UserManager.verifyUser(viewModel);
+		if (user == null) {
+			displayErrorMessage(ViewConstant.ERROR_USERNAME_PASSWORD_UNMATCH);
+			return;
 		}
-		else{
-			// Display error message
-			displayErrorMessage( ViewConstant.ERROR_USERNAME_PASSWORD_UNMATCH);
-		}
+
+		// Switch to group chat window
+		FXMLLoader vxmlLoader = FxUIHelper.switchScene(this, userNameTextField,
+				"/instantmessage/client/ui/GroupChatUI.fxml");
+		((GroupChatUIController) vxmlLoader.getController()).Init(user);
 	}
-	
-	private void displayErrorMessage(String msg){
+
+	/**
+	 * Display error message in UI
+	 * 
+	 * @param msg
+	 */
+	private void displayErrorMessage(String msg) {
 		FxUIHelper.setText(errorLabel, msg);
 		FxUIHelper.setVisible(errorLabel, true);
 	}
+
+	/**
+	 * Click event handler for login button
+	 * 
+	 * @param event
+	 */
+	@FXML
+	private void loginBtnAction(ActionEvent event) {
+		login();
+	}
+
+	/**
+	 * Key pressed event handler for password field
+	 * 
+	 * @param event
+	 */
+	@FXML
+	private void passwordTextFieldKeyPressed(KeyEvent event) {
+		if (event.getCode() == KeyCode.ENTER) {
+			login();
+		}
+	}
+
 }

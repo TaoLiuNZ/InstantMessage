@@ -1,18 +1,14 @@
 package instantmessage.server.model;
 
-
 import instantmessage.server.constant.MessageTypeCombination;
-
 
 public class SetupAddGroupMemberMessage extends Message {
 	private String groupMemberUid;
 
 	public SetupAddGroupMemberMessage(String senderUid) {
-	super(
-			MessageTypeCombination.SETUP_ADD_GROUP_MEMBER_MESSAGE, 
-			senderUid);
-		
-	this.setGroupMemberUid(senderUid);
+		super(MessageTypeCombination.SETUP_ADD_GROUP_MEMBER_MESSAGE, senderUid);
+
+		this.setGroupMemberUid(senderUid);
 	}
 
 	/**
@@ -23,16 +19,16 @@ public class SetupAddGroupMemberMessage extends Message {
 	}
 
 	/**
-	 * @param groupMemberUid the groupMemberUid to set
+	 * @param groupMemberUid
+	 *            the groupMemberUid to set
 	 */
 	public void setGroupMemberUid(String groupMemberUid) {
 		this.groupMemberUid = groupMemberUid;
 	}
 
 	@Override
-	public String toString(){
-		return 
-				"Type:"+this.getMessageType()+","+
-				"New Client UID:"+this.getSenderUid();
+	public String toString() {
+		return super.toString()+
+				"New Client UID: " + this.getSenderUid();
 	}
 }

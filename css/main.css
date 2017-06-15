@@ -26,6 +26,7 @@
  *                                                                              
  */
 
+
 /*
  *   This is a Material Design CSS for JavaFX
  */
@@ -190,6 +191,10 @@
 .icon-button .text {
 	-fx-font-family: 'MaterialDesignIconicFont';
 	-fx-font-size: 24px;
+}
+
+.button:hover{
+	-fx-background-color: -swatch-grey;
 }
 
 /*******************************************************************************

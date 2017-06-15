@@ -1,41 +1,37 @@
 package instantmessage.client.model;
 
+/**
+ * Super class for all message models
+ * 
+ * @author Tao Liu
+ *
+ */
 public class Message {
-	
-private long messageType;
-private String senderUid;
 
-public Message(long messageType,String senderUid){
-	this.setMessageType(messageType);
-	this.setSenderUid(senderUid);
-	
-}
+	// Private fields
+	private long messageType;
+	private String senderUid;
 
-/**
- * @return the messageType
- */
-public long getMessageType() {
-	return messageType;
-}
+	// Constructor
+	public Message(long messageType, String senderUid) {
+		this.setMessageType(messageType);
+		this.setSenderUid(senderUid);
+	}
 
-/**
- * @param messageType the messageType to set
- */
-public void setMessageType(long messageType) {
-	this.messageType = messageType;
-}
+	// Getters and setters
+	public long getMessageType() {
+		return messageType;
+	}
 
-/**
- * @return the senderUid
- */
-public String getSenderUid() {
-	return senderUid;
-}
+	public void setMessageType(long messageType) {
+		this.messageType = messageType;
+	}
 
-/**
- * @param senderUid the senderUid to set
- */
-public void setSenderUid(String senderUid) {
-	this.senderUid = senderUid;
-}
+	public String getSenderUid() {
+		return senderUid;
+	}
+
+	public void setSenderUid(String senderUid) {
+		this.senderUid = senderUid;
+	}
 }

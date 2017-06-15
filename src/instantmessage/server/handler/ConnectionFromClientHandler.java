@@ -1,41 +1,53 @@
 package instantmessage.server.handler;
 
 import java.net.Socket;
-import java.util.HashMap;
 
 import instantmessage.server.manager.MessageManager;
 import instantmessage.server.ui.ServerUIController;
 
-public class ConnectionFromClientHandler extends Thread{
-private Socket socket;
-private ServerUIController controller;
-	
-public ConnectionFromClientHandler(Socket socket,ServerUIController controller)
-{
-    this.socket = socket;
-    this.controller=controller;
-}
+/**
+ * This class is used to handle messages from client
+ * 
+ * @author Tao Liu
+ *
+ */
+public class ConnectionFromClientHandler extends Thread {
 
-public Socket getSocket(){
-	return this.socket;
-}
+	// Fields
+	private Socket socket;
+	private ServerUIController controller;
 
-@Override
-public void run()
-{
+	// Constructor
+	public ConnectionFromClientHandler(Socket socket, ServerUIController controller) {
+		this.socket = socket;
+		this.controller = controller;
+	}
 
-    while(true)
-    {
-    	// Check type
-    	long messageType=MessageManager.receiveLong(socket);   	
-  
-    	try{
-		// Call MessageExcution to handle message from client
-    	MessageManager.getMessageExcutionByType(messageType).handleMessageFromClient(socket,controller);
-    	}catch(Exception e){
-    		e.printStackTrace();
-    	}
-    }
+	/**
+	 * Get socket
+	 * 
+	 * @return
+	 */
+	public Socket getSocket() {
+		return this.socket;
+	}
 
-}
+	@Override
+	public void run() {
+
+		while (true) {
+
+			// Check type
+			long messageType = MessageManager.receiveLong(socket);
+
+			try {
+				// Call MessageExcution to handle message from server
+				MessageManager.getMessageExcutionByType(messageType).handleMessageFromClient(socket, controller);
+
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+
+	}
 }

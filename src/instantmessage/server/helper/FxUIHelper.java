@@ -1,31 +1,31 @@
 package instantmessage.server.helper;
 
-import java.io.File;
-import java.io.IOException;
-
 import javafx.application.Platform;
-import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
-import javafx.scene.control.Labeled;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
-import javafx.stage.Stage;
 
+/**
+ * This class is used to manage Fxml elements
+ * 
+ * @author Tao Liu
+ *
+ */
 public class FxUIHelper {
-	
 
-	public static void addElementToParent(Pane parent,Node child){
-		
-		
+	/**
+	 * Add a child control
+	 * 
+	 * @param parent
+	 * @param child
+	 */
+	public static void addElementToParent(Pane parent, Node child) {
+
 		Platform.runLater(new Runnable() {
-            @Override public void run() {
-            	parent.getChildren().add(child);
-            }
-        });
+			@Override
+			public void run() {
+				parent.getChildren().add(child);
+			}
+		});
 	}
-	
 
 }

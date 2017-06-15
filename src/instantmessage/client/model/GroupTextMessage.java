@@ -1,33 +1,29 @@
 package instantmessage.client.model;
 
-import instantmessage.client.constant.MessageType;
 import instantmessage.client.constant.MessageTypeCombination;
-import instantmessage.client.helper.EnumHelper;
 
+/**
+ * GroupTextMessage model
+ * @author Tao Liu
+ *
+ */
 public class GroupTextMessage extends Message {
+	
+	// Private fields
 	private String msg;
 
-	public GroupTextMessage(String senderUid,String msg) {
-	super(
-			MessageTypeCombination.GROUP_TEXT_MESSAGE, 
-			senderUid);
-		
-	this.setMsg(msg);
+	// Constructor
+	public GroupTextMessage(String senderUid, String msg) {
+		super(MessageTypeCombination.GROUP_TEXT_MESSAGE, senderUid);
+		this.setMsg(msg);
 	}
-
-	/**
-	 * @return the msg
-	 */
+	
+	// Getters and setters
 	public String getMsg() {
 		return msg;
 	}
-
-	/**
-	 * @param msg the msg to set
-	 */
 	public void setMsg(String msg) {
 		this.msg = msg;
 	}
-
 
 }

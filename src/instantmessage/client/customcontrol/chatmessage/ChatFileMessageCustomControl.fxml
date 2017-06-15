@@ -10,7 +10,7 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.RowConstraints?>
 
-<fx:root nodeOrientation="LEFT_TO_RIGHT" stylesheets="@../../../../css/chatmessage.css" type="GridPane" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="instantmessage.client.customcontrol.ChatFileMessageCustomControlController">
+<fx:root nodeOrientation="LEFT_TO_RIGHT" stylesheets="@../../../../../css/chatmessage.css" type="GridPane" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="instantmessage.client.customcontrol.chatmessage.ChatFileMessageCustomControlController">
    <rowConstraints>
       <RowConstraints minHeight="20.0" prefHeight="20.0" />
       <RowConstraints />
@@ -26,7 +26,7 @@
          </image>
       </ImageView>
       <Label fx:id="displayNameLabel" text="Chris" GridPane.columnIndex="1" GridPane.halignment="LEFT" GridPane.valignment="CENTER" />
-      <GridPane fx:id="chatMessageContainer" onMouseClicked="#chatMessageContainerMouseClicked" style="-fx-background-radius: 0 20 20 20;" styleClass="chat_message" stylesheets="@../../../../css/chatmessage.css" GridPane.columnIndex="1" GridPane.rowIndex="1">
+      <GridPane fx:id="chatMessageContainer" onMouseClicked="#chatMessageContainerMouseClicked" style="-fx-background-radius: 0 20 20 20;" styleClass="chat_message" stylesheets="@../../../../../css/chatmessage.css" GridPane.columnIndex="1" GridPane.rowIndex="1">
         <columnConstraints>
           <ColumnConstraints hgrow="SOMETIMES" maxWidth="40.0" minWidth="40.0" prefWidth="40.0" />
           <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" />
@@ -39,7 +39,7 @@
                <children>
                   <ImageView fitHeight="25.0" fitWidth="25.0" layoutX="7.0" layoutY="8.0" pickOnBounds="true" preserveRatio="true" style="-fx-background-color: BLACK;">
                      <image>
-                        <Image url="@../../../../image/file.png" />
+                        <Image url="@../../../../../image/file.png" />
                      </image>
                   </ImageView>
                </children>

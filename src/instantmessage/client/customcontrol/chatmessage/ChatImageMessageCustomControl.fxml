@@ -9,7 +9,7 @@
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.RowConstraints?>
 
-<fx:root nodeOrientation="LEFT_TO_RIGHT" stylesheets="@../../../../css/chatmessage.css" type="GridPane" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="instantmessage.client.customcontrol.ChatImageMessageCustomControlController">
+<fx:root nodeOrientation="LEFT_TO_RIGHT" stylesheets="@../../../../../css/chatmessage.css" type="GridPane" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="instantmessage.client.customcontrol.chatmessage.ChatImageMessageCustomControlController">
    <rowConstraints>
       <RowConstraints minHeight="20.0" prefHeight="20.0" />
       <RowConstraints />
@@ -25,7 +25,7 @@
          </image>
       </ImageView>
       <Label fx:id="displayNameLabel" text="Chris" GridPane.columnIndex="1" GridPane.halignment="LEFT" GridPane.valignment="CENTER" />
-      <GridPane fx:id="chatMessageContainer" maxHeight="200.0" onMouseClicked="#chatMessageContainerMouseClicked" style="-fx-background-radius: 0 20 20 20; -fx-padding: 10;" styleClass="chat_message" stylesheets="@../../../../css/chatmessage.css" GridPane.columnIndex="1" GridPane.rowIndex="1">
+      <GridPane fx:id="chatMessageContainer" maxHeight="200.0" onMouseClicked="#chatMessageContainerMouseClicked" style="-fx-background-radius: 0 20 20 20; -fx-padding: 10;" styleClass="chat_message" stylesheets="@../../../../../css/chatmessage.css" GridPane.columnIndex="1" GridPane.rowIndex="1">
         <columnConstraints>
           <ColumnConstraints />
         </columnConstraints>
@@ -33,10 +33,7 @@
           <RowConstraints maxHeight="200.0" />
         </rowConstraints>
          <children>
-            <ImageView fx:id="imageView" fitHeight="200.0" fitWidth="300.0" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@../../../../../../Downloads/paul.png" />
-               </image></ImageView>
+            <ImageView fx:id="imageView" fitHeight="200.0" fitWidth="300.0" pickOnBounds="true" preserveRatio="true" />
          </children>
          <cursor>
             <Cursor fx:constant="HAND" />

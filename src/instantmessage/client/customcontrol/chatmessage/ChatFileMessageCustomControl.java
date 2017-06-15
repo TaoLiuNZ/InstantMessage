@@ -1,4 +1,4 @@
-package instantmessage.client.customcontrol;
+package instantmessage.client.customcontrol.chatmessage;
 
 import java.io.IOException;
 
@@ -9,11 +9,14 @@ import instantmessage.client.viewmodel.UserTagViewModel;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.layout.GridPane;
 
-public class ChatFileMessageCustomControl extends ChatMessageCustomControl{
+/**
+ * A sub class of ChatMessageCustomControl
+ * 
+ * @author Tao Liu
+ *
+ */
+public class ChatFileMessageCustomControl extends ChatMessageCustomControl {
 
-	public ChatFileMessageCustomControl() {
-		super();
-	}
 	public ChatFileMessageCustomControl(IViewModel viewModel) {
 		super(viewModel);
 	}
@@ -21,7 +24,6 @@ public class ChatFileMessageCustomControl extends ChatMessageCustomControl{
 	@Override
 	protected String setFXMLPath() {
 		return "ChatFileMessageCustomControl.fxml";
-	}	 
+	}
 
-	 
 }

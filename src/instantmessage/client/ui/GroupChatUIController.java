@@ -6,29 +6,19 @@ import java.net.Socket;
 import java.net.UnknownHostException;
 import java.util.HashMap;
 
-import javax.swing.event.ChangeEvent;
-
-import instantmessage.client.constant.ChatMessageViewModelType;
 import instantmessage.client.constant.Orientation;
-import instantmessage.client.customcontrol.ChatFileMessageCustomControl;
-import instantmessage.client.customcontrol.ChatImageMessageCustomControl;
-import instantmessage.client.customcontrol.ChatMessageCustomControl;
-import instantmessage.client.customcontrol.ChatTextMessageCustomControl;
-import instantmessage.client.customcontrol.CustomControl;
-import instantmessage.client.customcontrol.UserTagCustomControl;
+import instantmessage.client.customcontrol.chatmessage.ChatMessageCustomControl;
+import instantmessage.client.customcontrol.usertag.UserTagCustomControl;
 import instantmessage.client.handler.MessageFromServerHandler;
 import instantmessage.client.helper.FxUIHelper;
 import instantmessage.client.manager.ChatMessageCustomControlManager;
-import instantmessage.client.manager.MessageManager;
+import instantmessage.client.manager.message.MessageManager;
 import instantmessage.client.model.GroupFileMessage;
 import instantmessage.client.model.GroupTextMessage;
 import instantmessage.client.model.Message;
 import instantmessage.client.model.SetupAddGroupMemberMessage;
 import instantmessage.client.model.User;
-import instantmessage.client.viewmodel.ChatFileMessageViewModel;
-import instantmessage.client.viewmodel.ChatImageMessageViewModel;
 import instantmessage.client.viewmodel.ChatMessageViewModel;
-import instantmessage.client.viewmodel.ChatTextMessageViewModel;
 import instantmessage.client.viewmodel.UserTagViewModel;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
@@ -44,148 +34,201 @@ import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.VBox;
 import javafx.stage.FileChooser;
 
-public class GroupChatUIController implements IUIController{
-@FXML private ImageView avatarImageView;
-@FXML private Label displayNameLabel;
-@FXML private VBox chatMessageContainerVBox;
-@FXML private ScrollPane chatMessageContainerScrollPane;
-@FXML private VBox userTagContainerVBox;
-@FXML private TextField messageToSendTextField;
-@FXML private Button sendBtn;
-@FXML private Button fileBtn;
+/**
+ * Controller for GroupChatUI
+ * 
+ * @author Tao Liu
+ *
+ */
+public class GroupChatUIController implements IUIController {
 
+	// Fields
+	@FXML
+	private ImageView avatarImageView;
+	@FXML
+	private Label displayNameLabel;
+	@FXML
+	private VBox chatMessageContainerVBox;
+	@FXML
+	private ScrollPane chatMessageContainerScrollPane;
+	@FXML
+	private VBox userTagContainerVBox;
+	@FXML
+	private TextField messageToSendTextField;
+	@FXML
+	private Button sendBtn;
+	@FXML
+	private Button fileBtn;
 
-private User currentUser;
-private Socket socket;
-private HashMap<String,UserTagViewModel> groupMembers;
+	private User currentUser;
+	private Socket socket;
+	private HashMap<String, UserTagViewModel> groupMembers;
 
-public void Init(User currentUser){
-	SetListeners();
-	setUIData(currentUser);
-	startConnectToServer();
-}
+	/**
+	 * Initialize this UI with current user
+	 * 
+	 * @param currentUser
+	 */
+	public void Init(User currentUser) {
+		SetListeners();
+		setUIData(currentUser);
+		startConnectingToServer();
+	}
 
-private void SetListeners(){
-	chatMessageContainerVBox.heightProperty().addListener(new ChangeListener<Number>() {
-	    @Override public void changed(ObservableValue<? extends Number> observableValue, Number oldSceneHeight, Number newSceneHeight) {	    	
-	    	chatMessageContainerScrollPane.setVvalue(1.0);
-	    }
-	});
-}
+	/**
+	 * Set listeners
+	 */
+	private void SetListeners() {
+		// Make sure when a new message is added to the container, it
+		// automatically scrolls down to the bottom
+		chatMessageContainerVBox.heightProperty().addListener(new ChangeListener<Number>() {
+			@Override
+			public void changed(ObservableValue<? extends Number> observableValue, Number oldSceneHeight,
+					Number newSceneHeight) {
+				chatMessageContainerScrollPane.setVvalue(1.0);
+			}
+		});
+	}
 
-	private void setUIData(User currentUser){
+	/**
+	 * Set UI data
+	 * 
+	 * @param currentUser
+	 */
+	private void setUIData(User currentUser) {
 		// groupMembers
-		groupMembers=new HashMap<String,UserTagViewModel>();
-		
+		groupMembers = new HashMap<String, UserTagViewModel>();
+
 		// Current user
-		this.currentUser=currentUser;
+		this.currentUser = currentUser;
 		FxUIHelper.setAvatarImage(avatarImageView, currentUser.getPicUrl());
 		FxUIHelper.setText(displayNameLabel, currentUser.getDisplayName());
-				
 	}
-	
-	private void startConnectToServer(){
+
+	/**
+	 * Start connection with server
+	 */
+	private void startConnectingToServer() {
 		// Start connecting to server
-		
+
 		try {
-			socket = new Socket("localhost",5000);
-			
-			// Start listening response from server
-			MessageFromServerHandler serverHandler=new MessageFromServerHandler(socket,this);
-		serverHandler.start();
-		
-		// Send current client info to server to register
-		Message message=new SetupAddGroupMemberMessage(currentUser.getUid());
-		MessageManager.getMessageExcutionByType(message.getMessageType()).sendMessageToServer(socket, message);
-		
+			socket = new Socket("localhost", 5000);
+
+			// Start listening responses from server
+			MessageFromServerHandler serverHandler = new MessageFromServerHandler(socket, this);
+			serverHandler.start();
+
+			// Send current client info to server to register
+			Message message = new SetupAddGroupMemberMessage(currentUser.getUid());
+			MessageManager.getMessageExecutionByType(message.getMessageType()).sendMessageToServer(socket, message);
+
 		} catch (UnknownHostException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
-	
-	public void addChatMessage(ChatMessageViewModel viewModel){
-		// Check the black list
-		UserTagViewModel user=groupMembers.get(viewModel.getUid());
-		if(user!=null&&user.getIsBlocked())
+
+	/**
+	 * Add chat message to the UI
+	 * 
+	 * @param viewModel
+	 */
+	public void addChatMessage(ChatMessageViewModel viewModel) {
+		// Check the block list
+		UserTagViewModel user = groupMembers.get(viewModel.getUid());
+		if (user != null && user.getIsBlocked())
 			return;
-		
+
 		// Check if this message is from user himself
 		// If true, set orientation to right
-		if(viewModel.getUid().equals(currentUser.getUid())){
-			viewModel.setOrientation(Orientation.RIGHT);
+		if (viewModel.getUid().equals(currentUser.getUid())) {
+			viewModel.setOrientation(Orientation.RIGHT_TO_LEFT);
 		}
-		
+
 		// Message custom control
-		ChatMessageCustomControl chatMsg=ChatMessageCustomControlManager.getChatMessageCustomControlByType(viewModel);
+		ChatMessageCustomControl chatMsg = ChatMessageCustomControlManager.getChatMessageCustomControlByType(viewModel);
+
 		FxUIHelper.addElementToParent(chatMessageContainerVBox, chatMsg);
 	}
-	
 
-	public void addTagUser(UserTagViewModel viewModel){
+	/**
+	 * Add user tag to UI
+	 * 
+	 * @param viewModel
+	 */
+	public void addUserTag(UserTagViewModel viewModel) {
 		// Add to group members list
 		groupMembers.put(viewModel.getUid(), viewModel);
-		
-		// UI
-		UserTagCustomControl userTag=new UserTagCustomControl(viewModel);
+
+		// user tag
+		UserTagCustomControl userTag = new UserTagCustomControl(viewModel);
+
 		FxUIHelper.addElementToParent(userTagContainerVBox, userTag);
 	}
-	
-	@FXML private void sendBtnAction(ActionEvent event){
-		
-		sendMessage();
-	}
-	
-	
-	@FXML private void messageToSendTextFieldKeyPressed(KeyEvent event){
-		if(event.getCode() == KeyCode.ENTER) {
-			sendMessage();
-	     }
-	}
-	
-	private void sendMessage(){
+
+	/**
+	 * Send text message
+	 */
+	private void sendTextMessage() {
 		// Check if empty
-		String msgToSend=messageToSendTextField.getText();
-		if(msgToSend.isEmpty()){
+		String msgToSend = messageToSendTextField.getText();
+		if (msgToSend.isEmpty()) {
 			return;
 		}
-		
+
 		// Clear text
 		messageToSendTextField.clear();
-		
+
 		// Set focus back to text field
 		messageToSendTextField.requestFocus();
-		
-		// Message 
-		GroupTextMessage message=new GroupTextMessage(currentUser.getUid(),msgToSend);
-		MessageManager.getMessageExcutionByType(message.getMessageType()).sendMessageToServer(socket, message);
+
+		// Send
+		GroupTextMessage message = new GroupTextMessage(currentUser.getUid(), msgToSend);
+		MessageManager.getMessageExecutionByType(message.getMessageType()).sendMessageToServer(socket, message);
 	}
-	
-	public User getCurrentUser(){
-		return this.currentUser;
+
+	/**
+	 * Click event handler for send button
+	 * 
+	 * @param event
+	 */
+	@FXML
+	private void sendBtnAction(ActionEvent event) {
+		sendTextMessage();
 	}
-	
-	public HashMap<String, UserTagViewModel> getGroupMembersList(){
-		return this.groupMembers;
+
+	/**
+	 * Key pressed event handler for message typing field
+	 * 
+	 * @param event
+	 */
+	@FXML
+	private void messageToSendTextFieldKeyPressed(KeyEvent event) {
+		if (event.getCode() == KeyCode.ENTER) {
+			sendTextMessage();
+		}
 	}
-	
-	
-	@FXML private void fileBtnAction(ActionEvent event){
-		// File chooser
+
+	/**
+	 * Click event handler for file button
+	 * 
+	 * @param event
+	 */
+	@FXML
+	private void fileBtnAction(ActionEvent event) {
+		// Choose file
 		FileChooser fileChooser = new FileChooser();
 		File selectedFile = fileChooser.showOpenDialog(null);
 
+		// Send
 		if (selectedFile != null) {
+			GroupFileMessage message = new GroupFileMessage(currentUser.getUid(), selectedFile.getPath());
+			MessageManager.getMessageExecutionByType(message.getMessageType()).sendMessageToServer(socket, message);
+		} else {
 
-		    GroupFileMessage message=new GroupFileMessage(currentUser.getUid(),selectedFile.getPath());
-		    MessageManager.getMessageExcutionByType(message.getMessageType()).sendMessageToServer(socket, message);
 		}
-		else {
-		    
-		}
+
 		// Set focus back to text field
 		messageToSendTextField.requestFocus();
 	}

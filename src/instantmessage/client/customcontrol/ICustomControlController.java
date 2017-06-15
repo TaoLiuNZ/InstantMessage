@@ -2,6 +2,18 @@ package instantmessage.client.customcontrol;
 
 import instantmessage.client.viewmodel.IViewModel;
 
+/**
+ * Interface for all custom controls
+ * 
+ * @author Tao Liu
+ *
+ */
 public interface ICustomControlController {
-void setViewData(IViewModel viewModel);
+
+	/**
+	 * Set data for this view
+	 * 
+	 * @param viewModel
+	 */
+	void setViewData(IViewModel viewModel);
 }
