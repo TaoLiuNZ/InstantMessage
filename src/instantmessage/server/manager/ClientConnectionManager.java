@@ -6,14 +6,23 @@ import java.util.HashMap;
 import instantmessage.server.handler.ConnectionFromClientHandler;
 import instantmessage.server.ui.ServerUIController;
 
+/**
+ * A Singleton class to manage connections from clients;
+ * @author Tao Liu
+ *
+ */
 public class ClientConnectionManager {
+	
+	// Fields
 	private static HashMap<String, ConnectionFromClientHandler> clientsList;
 	private static ServerUIController serverUIController;
 	private static ClientConnectionManager instance = null;
 
-	protected ClientConnectionManager() {
-	}
-
+	/**
+	 * Get the only instance of this class
+	 * @param controller
+	 * @return
+	 */
 	public static ClientConnectionManager getInstance(ServerUIController controller) {
 		if (instance == null) {
 			instance = new ClientConnectionManager();
@@ -23,24 +32,24 @@ public class ClientConnectionManager {
 		return instance;
 	}
 
+	/**
+	 * Start a new client connection handler
+	 * @param socket
+	 */
 	public void startNewClientHandler(Socket socket) {
-		// Get message type & uid
+		// Get message type & call corresponding execution to handle the message
 		long messageType = MessageManager.receiveLong(socket);
-		String uid = MessageManager.receiveText(socket);
-		new SetupAddGroupMemberMessageExcution().handleMessageFromClient(socket, uid, serverUIController);
-
-		// Create and start the client handler thread
-		ConnectionFromClientHandler clientConnection = new ConnectionFromClientHandler(socket, serverUIController);
-		clientConnection.start();
-
-		// Add this handler to clients list
-		clientsList.put(uid, clientConnection);
-
-		// Display
-		serverUIController.addTextToTextFlow("Client conntected: UID (" + uid + ")");
+		MessageManager.getMessageExcutionByType(messageType).handleMessageFromClient(socket,  serverUIController);
 	}
 
+	/**
+	 * Stop client handler
+	 * @param socket
+	 */
 	public void stopClientHandler(Socket socket) {
+		// Get message type & call corresponding execution to handle the message
+				long messageType = MessageManager.receiveLong(socket);
+				MessageManager.getMessageExcutionByType(messageType).handleMessageFromClient(socket,  serverUIController);
 		// Get message type & uid
 		// TODO : STOP CLIENT HANDLER
 		String uid = "";

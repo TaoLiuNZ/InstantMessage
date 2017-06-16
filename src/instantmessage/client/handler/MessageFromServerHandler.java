@@ -7,11 +7,12 @@ import instantmessage.client.ui.IUIController;
 
 /**
  * This class is used to handle messages from server
+ * 
  * @author Tao Liu
  *
  */
 public class MessageFromServerHandler extends Thread {
-	
+
 	// Fields
 	private Socket socket;
 	private IUIController controller;
@@ -26,15 +27,16 @@ public class MessageFromServerHandler extends Thread {
 	public void run() {
 		// Keep running
 		while (true) {
-			
+
 			// Check type
 			long messageType = MessageManager.receiveLong(socket);
 
 			try {
-				
-				// According to message type, call corresponding execution class to handle
+
+				// According to message type, call corresponding execution class
+				// to handle
 				MessageManager.getMessageExecutionByType(messageType).handleMessageFromServer(socket, controller);
-				
+
 			} catch (Exception e) {
 				e.printStackTrace();
 			}

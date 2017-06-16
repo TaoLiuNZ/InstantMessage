@@ -26,6 +26,7 @@ public class MessageManager {
 	private static HashMap<Long, IMessageExecution> messageExcutions = new HashMap<Long, IMessageExecution>() {
 		{
 			put(MessageTypeCombination.SETUP_ADD_GROUP_MEMBER_MESSAGE, new SetupAddGroupMemberMessageExcution());
+			put(MessageTypeCombination.SETUP_DELETE_GROUP_MEMBER_MESSAGE, new SetupDeleteGroupMemberMessageExcution());
 			put(MessageTypeCombination.GROUP_FILE_MESSAGE, new GroupFileMessageExecution());
 			put(MessageTypeCombination.GROUP_TEXT_MESSAGE, new GroupTextMessageExecution());
 		}
@@ -147,6 +148,21 @@ public class MessageManager {
 	public static Long receiveLong(Socket socket) {
 		try {
 			return getDataInputStream(socket).readLong();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+
+	/**
+	 * Receive Boolean
+	 * 
+	 * @param socket
+	 * @return
+	 */
+	public static Boolean receiveBoolean(Socket socket) {
+		try {
+			return getDataInputStream(socket).readBoolean();
 		} catch (IOException e) {
 			e.printStackTrace();
 		}

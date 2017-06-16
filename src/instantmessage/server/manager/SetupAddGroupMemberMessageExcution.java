@@ -14,11 +14,14 @@ public class SetupAddGroupMemberMessageExcution implements IMessageExcution {
 	@Override
 	public void sendMessageToClient(Socket socket, Message message) {
 		// Get info
-		String groupMemberUid = ((SetupAddGroupMemberMessage) message).getGroupMemberUid();
+		SetupAddGroupMemberMessage setupAddGroupMemberMessage=(SetupAddGroupMemberMessage) message;
+		String groupMemberUid = setupAddGroupMemberMessage.getGroupMemberUid();
+		Boolean isNewMember=setupAddGroupMemberMessage.getIsNewMember();
 
 		// Send
 		MessageManager.sendLong(socket, message.getMessageType());
 		MessageManager.sendText(socket, groupMemberUid);
+		MessageManager.sendBoolean(socket, isNewMember);
 		MessageManager.sendText(socket, socket.getRemoteSocketAddress().toString());
 	}
 
@@ -26,24 +29,32 @@ public class SetupAddGroupMemberMessageExcution implements IMessageExcution {
 	public void handleMessageFromClient(Socket socket, ServerUIController controller) {
 		// Get info
 		String uid = MessageManager.receiveText(socket);
-		handleMessageFromClient(socket, uid, controller);
-	}
 
-	public void handleMessageFromClient(Socket socket, String uid, ServerUIController controller) {
+		// Create and start the client handler thread
+		ConnectionFromClientHandler clientConnection = new ConnectionFromClientHandler(socket, controller);
+		clientConnection.start();
 
+		// Add this handler to clients list
 		HashMap<String, ConnectionFromClientHandler> clients = ClientConnectionManager.getInstance(controller)
 				.getClientsList();
+		clients.put(uid, clientConnection);
+
+		// Display
+		controller.addTextToTextFlow("Client conntected: UID (" + uid + ")");
+
+		// Notify other clients
 		for (Entry<String, ConnectionFromClientHandler> entry : clients.entrySet()) {
 			String key = entry.getKey();
 			ConnectionFromClientHandler value = entry.getValue();
 
-			// Notify other clients that a new client is connected
-			Message messageForOtherClients = new SetupAddGroupMemberMessage(uid);
-			this.sendMessageToClient(value.getSocket(), messageForOtherClients);
-
-			// Send current client list to this client
 			if (!key.equals(uid)) {
-				Message messageForThisClient = new SetupAddGroupMemberMessage(key);
+
+				// Notify other clients that a new client is connected
+				Message messageForOtherClients = new SetupAddGroupMemberMessage(uid,true);
+				this.sendMessageToClient(value.getSocket(), messageForOtherClients);
+
+				// Send current client list to this client
+				Message messageForThisClient = new SetupAddGroupMemberMessage(key,false);
 				this.sendMessageToClient(socket, messageForThisClient);
 			}
 		}

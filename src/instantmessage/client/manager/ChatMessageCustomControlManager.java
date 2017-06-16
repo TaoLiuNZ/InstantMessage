@@ -3,6 +3,7 @@ package instantmessage.client.manager;
 import instantmessage.client.customcontrol.chatmessage.ChatFileMessageCustomControl;
 import instantmessage.client.customcontrol.chatmessage.ChatImageMessageCustomControl;
 import instantmessage.client.customcontrol.chatmessage.ChatMessageCustomControl;
+import instantmessage.client.customcontrol.chatmessage.ChatSetupMessageCustomControl;
 import instantmessage.client.customcontrol.chatmessage.ChatTextMessageCustomControl;
 import instantmessage.client.viewmodel.ChatMessageViewModel;
 
@@ -30,6 +31,8 @@ public class ChatMessageCustomControlManager {
 			return new ChatFileMessageCustomControl(chatMessageViewModel);
 		case CHAT_TEXT_MESSAGE:
 			return new ChatTextMessageCustomControl(chatMessageViewModel);
+		case CHAT_SETUP_MESSAGE:
+			return new ChatSetupMessageCustomControl(chatMessageViewModel);
 		default:
 			return null;
 		}

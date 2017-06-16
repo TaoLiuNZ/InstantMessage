@@ -16,3 +16,7 @@
 
 -fx-background-color: #1fb1ef !important; 
 }
+
+.chat_setup_message{
+	 -fx-background-color: #d4d3d3 !important;
+}

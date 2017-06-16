@@ -16,11 +16,13 @@ public class ConnectionFromClientHandler extends Thread {
 	// Fields
 	private Socket socket;
 	private ServerUIController controller;
+	private Boolean isRunning;
 
 	// Constructor
 	public ConnectionFromClientHandler(Socket socket, ServerUIController controller) {
 		this.socket = socket;
 		this.controller = controller;
+		this.isRunning = true;
 	}
 
 	/**
@@ -35,7 +37,7 @@ public class ConnectionFromClientHandler extends Thread {
 	@Override
 	public void run() {
 
-		while (true) {
+		while (isRunning) {
 
 			// Check type
 			long messageType = MessageManager.receiveLong(socket);
@@ -49,5 +51,12 @@ public class ConnectionFromClientHandler extends Thread {
 			}
 		}
 
+	}
+
+	/**
+	 * Stop connection with client
+	 */
+	public void stopConnection() {
+		this.isRunning = false;
 	}
 }

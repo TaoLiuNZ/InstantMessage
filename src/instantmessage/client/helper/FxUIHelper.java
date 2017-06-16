@@ -88,6 +88,22 @@ public class FxUIHelper {
 	}
 
 	/**
+	 * Remove a child control from parents
+	 * 
+	 * @param parent
+	 * @param child
+	 */
+	public static void removeElementFromParent(Pane parent, Node child) {
+
+		Platform.runLater(new Runnable() {
+			@Override
+			public void run() {
+				parent.getChildren().remove(child);
+			}
+		});
+	}
+
+	/**
 	 * Open a new window
 	 * 
 	 * @param obj

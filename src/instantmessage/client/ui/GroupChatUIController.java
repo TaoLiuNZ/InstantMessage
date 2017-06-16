@@ -17,12 +17,14 @@ import instantmessage.client.model.GroupFileMessage;
 import instantmessage.client.model.GroupTextMessage;
 import instantmessage.client.model.Message;
 import instantmessage.client.model.SetupAddGroupMemberMessage;
+import instantmessage.client.model.SetupDeleteGroupMemberMessage;
 import instantmessage.client.model.User;
 import instantmessage.client.viewmodel.ChatMessageViewModel;
 import instantmessage.client.viewmodel.UserTagViewModel;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -33,6 +35,7 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.VBox;
 import javafx.stage.FileChooser;
+import javafx.stage.WindowEvent;
 
 /**
  * Controller for GroupChatUI
@@ -62,7 +65,8 @@ public class GroupChatUIController implements IUIController {
 
 	private User currentUser;
 	private Socket socket;
-	private HashMap<String, UserTagViewModel> groupMembers;
+	private MessageFromServerHandler serverHandler;
+	private HashMap<String, UserTagCustomControl> groupMembers;
 
 	/**
 	 * Initialize this UI with current user
@@ -79,13 +83,21 @@ public class GroupChatUIController implements IUIController {
 	 * Set listeners
 	 */
 	private void SetListeners() {
-		// Make sure when a new message is added to the container, it
-		// automatically scrolls down to the bottom
+		// Make sure when a new message is added to the container,
+		// it automatically scrolls down to the bottom
 		chatMessageContainerVBox.heightProperty().addListener(new ChangeListener<Number>() {
 			@Override
 			public void changed(ObservableValue<? extends Number> observableValue, Number oldSceneHeight,
 					Number newSceneHeight) {
 				chatMessageContainerScrollPane.setVvalue(1.0);
+			}
+		});
+
+		// Listen to the close button,
+		// When it is clicked, stop connection with server
+		chatMessageContainerVBox.getScene().getWindow().setOnCloseRequest(new EventHandler<WindowEvent>() {
+			public void handle(WindowEvent we) {
+				stopConnectionWithServer();
 			}
 		});
 	}
@@ -97,7 +109,7 @@ public class GroupChatUIController implements IUIController {
 	 */
 	private void setUIData(User currentUser) {
 		// groupMembers
-		groupMembers = new HashMap<String, UserTagViewModel>();
+		groupMembers = new HashMap<String, UserTagCustomControl>();
 
 		// Current user
 		this.currentUser = currentUser;
@@ -115,7 +127,7 @@ public class GroupChatUIController implements IUIController {
 			socket = new Socket("localhost", 5000);
 
 			// Start listening responses from server
-			MessageFromServerHandler serverHandler = new MessageFromServerHandler(socket, this);
+			serverHandler = new MessageFromServerHandler(socket, this);
 			serverHandler.start();
 
 			// Send current client info to server to register
@@ -130,14 +142,23 @@ public class GroupChatUIController implements IUIController {
 	}
 
 	/**
+	 * Stop connection with server
+	 */
+	private void stopConnectionWithServer() {
+		// Send current client info to server to deregister
+		Message message = new SetupDeleteGroupMemberMessage(currentUser.getUid());
+		MessageManager.getMessageExecutionByType(message.getMessageType()).sendMessageToServer(socket, message);
+	}
+
+	/**
 	 * Add chat message to the UI
 	 * 
 	 * @param viewModel
 	 */
 	public void addChatMessage(ChatMessageViewModel viewModel) {
 		// Check the block list
-		UserTagViewModel user = groupMembers.get(viewModel.getUid());
-		if (user != null && user.getIsBlocked())
+		UserTagCustomControl user = groupMembers.get(viewModel.getUid());
+		if (user != null && user.getUserTagViewModel().getIsBlocked())
 			return;
 
 		// Check if this message is from user himself
@@ -148,7 +169,6 @@ public class GroupChatUIController implements IUIController {
 
 		// Message custom control
 		ChatMessageCustomControl chatMsg = ChatMessageCustomControlManager.getChatMessageCustomControlByType(viewModel);
-
 		FxUIHelper.addElementToParent(chatMessageContainerVBox, chatMsg);
 	}
 
@@ -158,13 +178,26 @@ public class GroupChatUIController implements IUIController {
 	 * @param viewModel
 	 */
 	public void addUserTag(UserTagViewModel viewModel) {
-		// Add to group members list
-		groupMembers.put(viewModel.getUid(), viewModel);
-
-		// user tag
+		// Add a user tag
 		UserTagCustomControl userTag = new UserTagCustomControl(viewModel);
-
 		FxUIHelper.addElementToParent(userTagContainerVBox, userTag);
+		
+		// Add to group members list
+		groupMembers.put(viewModel.getUid(), userTag);
+	}
+
+	/**
+	 * Remove user tag from UI
+	 * 
+	 * @param viewModel
+	 */
+	public void removeUserTag(UserTagViewModel viewModel) {
+		// Remove from UI
+		UserTagCustomControl userTag = groupMembers.get(viewModel.getUid());
+		FxUIHelper.removeElementFromParent(userTagContainerVBox, userTag);
+
+		// Remove from group members list
+		groupMembers.remove(viewModel.getUid());
 	}
 
 	/**

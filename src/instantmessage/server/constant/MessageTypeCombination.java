@@ -14,4 +14,6 @@ public class MessageTypeCombination {
 	public static final long SETUP_ADD_GROUP_MEMBER_MESSAGE = 
 			EnumHelper.encode(MessageType.SETUP_MESSAGE,MessageType.ADD_GROUP_MEMBER_MESSAGE);
 	
+	public static final long SETUP_DELETE_GROUP_MEMBER_MESSAGE = 
+			EnumHelper.encode(MessageType.SETUP_MESSAGE,MessageType.DELETE_GROUP_MEMBER_MESSAGE);
 }

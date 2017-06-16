@@ -16,6 +16,7 @@ public class MessageManager {
 	private static HashMap<Long, IMessageExcution> messageExcutions = new HashMap<Long, IMessageExcution>() {
 		{
 			put(MessageTypeCombination.SETUP_ADD_GROUP_MEMBER_MESSAGE, new SetupAddGroupMemberMessageExcution());
+			put(MessageTypeCombination.SETUP_DELETE_GROUP_MEMBER_MESSAGE, new SetupDeleteGroupMemberMessageExcution());
 			put(MessageTypeCombination.GROUP_FILE_MESSAGE, new GroupFileMessageExcution());
 			put(MessageTypeCombination.GROUP_TEXT_MESSAGE, new GroupTextMessageExcution());
 		}
@@ -38,6 +39,15 @@ public class MessageManager {
 	public static void sendText(Socket socket, String text) {
 		try {
 			getDataOutputStream(socket).writeUTF(text);
+
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	public static void sendBoolean(Socket socket, Boolean value) {
+		try {
+			getDataOutputStream(socket).writeBoolean(value);
 
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
