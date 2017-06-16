@@ -17,16 +17,6 @@ import javax.activation.FileTypeMap;
 public class FileHelper {
 
 	/**
-	 * This method is used to get the file path of ReceivedFile folder
-	 * 
-	 * @param fileName
-	 * @return
-	 */
-	public static String getReceivedFilePath(String fileName) {
-		return getPath("FileReceived", fileName);
-	}
-
-	/**
 	 * This method is used to check whether a file is an image file
 	 * 
 	 * @param filePath
@@ -49,7 +39,7 @@ public class FileHelper {
 				return false;
 		}
 	}
-
+	
 	/**
 	 * This method is used to check whether a file is an image file by its
 	 * extension
@@ -69,18 +59,22 @@ public class FileHelper {
 	 * @param fileName
 	 * @return
 	 */
-	private static String getPath(String folderName, String fileName) {
-		File dir = new File(System.getProperty("user.dir") + File.separatorChar + folderName);
-
-		// Check if exists
-		if (!dir.exists()) {
-			try {
-				Files.createDirectories(Paths.get(dir.getName()));
-			} catch (IOException e) {
-				e.printStackTrace();
+	public static String getPath( String fileName,String... folderNames) {
+		File dir = new File(System.getProperty("user.dir"));
+		
+		// If folder doesn't exist, create one
+		for(int i=0;i<folderNames.length;i++){
+			dir = new File(dir.getPath() + File.separatorChar + folderNames[i]);
+			if (!dir.exists()) {
+				try {
+					Files.createDirectories(Paths.get(dir.getPath()));
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
 			}
 		}
 
-		return dir.getName() + File.separatorChar + System.currentTimeMillis() + fileName;
+		return dir.getPath() + File.separatorChar + System.currentTimeMillis() + fileName;
 	}
+	
 }

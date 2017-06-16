@@ -1,14 +1,15 @@
-package instantmessage.server.manager;
+package instantmessage.server.manager.message;
 
 import java.net.Socket;
 import java.util.HashMap;
 
 import instantmessage.server.handler.ConnectionFromClientHandler;
+import instantmessage.server.manager.ClientConnectionManager;
 import instantmessage.server.model.GroupFileMessage;
 import instantmessage.server.model.Message;
 import instantmessage.server.ui.ServerUIController;
 
-public class GroupFileMessageExcution implements IMessageExcution {
+public class GroupFileMessageExecution implements IMessageExecution {
 
 	@Override
 	public void sendMessageToClient(Socket socket, Message message) {
@@ -35,10 +36,12 @@ public class GroupFileMessageExcution implements IMessageExcution {
 		GroupFileMessage message = new GroupFileMessage(uid, fileName, fileByteData);
 
 		// Send back to all clients
-		HashMap<String, ConnectionFromClientHandler> clients = ClientConnectionManager.getInstance(controller)
-				.getClientsList();
-		for (ConnectionFromClientHandler c : clients.values()) {
-			this.sendMessageToClient(c.getSocket(), message);
+		HashMap<String, HashMap<String, ConnectionFromClientHandler>> clients = ClientConnectionManager
+				.getInstance(controller).getClientsList();
+		for (HashMap<String, ConnectionFromClientHandler> singleClientMultipleConnections : clients.values()) {
+			for (ConnectionFromClientHandler client : singleClientMultipleConnections.values()) {
+				this.sendMessageToClient(client.getSocket(), message);
+			}
 		}
 		
 		// Display

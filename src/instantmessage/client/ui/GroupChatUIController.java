@@ -65,6 +65,7 @@ public class GroupChatUIController implements IUIController {
 
 	private User currentUser;
 	private Socket socket;
+	private String connectionId;
 	private MessageFromServerHandler serverHandler;
 	private HashMap<String, UserTagCustomControl> groupMembers;
 
@@ -131,7 +132,8 @@ public class GroupChatUIController implements IUIController {
 			serverHandler.start();
 
 			// Send current client info to server to register
-			Message message = new SetupAddGroupMemberMessage(currentUser.getUid());
+			connectionId=Long.toString(System.currentTimeMillis());
+			Message message = new SetupAddGroupMemberMessage(currentUser.getUid(),connectionId);
 			MessageManager.getMessageExecutionByType(message.getMessageType()).sendMessageToServer(socket, message);
 
 		} catch (UnknownHostException e) {
@@ -146,7 +148,7 @@ public class GroupChatUIController implements IUIController {
 	 */
 	private void stopConnectionWithServer() {
 		// Send current client info to server to deregister
-		Message message = new SetupDeleteGroupMemberMessage(currentUser.getUid());
+		Message message = new SetupDeleteGroupMemberMessage(currentUser.getUid(),connectionId);
 		MessageManager.getMessageExecutionByType(message.getMessageType()).sendMessageToServer(socket, message);
 	}
 

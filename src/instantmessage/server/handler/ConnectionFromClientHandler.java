@@ -2,7 +2,7 @@ package instantmessage.server.handler;
 
 import java.net.Socket;
 
-import instantmessage.server.manager.MessageManager;
+import instantmessage.server.manager.message.MessageManager;
 import instantmessage.server.ui.ServerUIController;
 
 /**

@@ -39,7 +39,7 @@ public class GroupFileMessageExecution implements IMessageExecution {
 		String uid = MessageManager.receiveText(socket);
 		String fileName = MessageManager.receiveText(socket);
 		long fileSize = MessageManager.receiveLong(socket);
-		String localFilePath = MessageManager.receiveFile(socket, fileName, fileSize);
+		String localFilePath = MessageManager.receiveFile(socket, fileName, fileSize,"ReceivedFiles",uid);
 
 		// Display in UI
 		GroupChatUIController groupChatUIController = (GroupChatUIController) controller;

@@ -1,4 +1,4 @@
-package instantmessage.server.manager;
+package instantmessage.server.manager.message;
 
 import java.io.ByteArrayOutputStream;
 import java.io.DataInputStream;
@@ -13,16 +13,16 @@ import instantmessage.server.constant.MessageTypeCombination;
 
 public class MessageManager {
 
-	private static HashMap<Long, IMessageExcution> messageExcutions = new HashMap<Long, IMessageExcution>() {
+	private static HashMap<Long, IMessageExecution> messageExcutions = new HashMap<Long, IMessageExecution>() {
 		{
-			put(MessageTypeCombination.SETUP_ADD_GROUP_MEMBER_MESSAGE, new SetupAddGroupMemberMessageExcution());
-			put(MessageTypeCombination.SETUP_DELETE_GROUP_MEMBER_MESSAGE, new SetupDeleteGroupMemberMessageExcution());
-			put(MessageTypeCombination.GROUP_FILE_MESSAGE, new GroupFileMessageExcution());
-			put(MessageTypeCombination.GROUP_TEXT_MESSAGE, new GroupTextMessageExcution());
+			put(MessageTypeCombination.SETUP_ADD_GROUP_MEMBER_MESSAGE, new SetupAddGroupMemberMessageExecution());
+			put(MessageTypeCombination.SETUP_DELETE_GROUP_MEMBER_MESSAGE, new SetupDeleteGroupMemberMessageExecution());
+			put(MessageTypeCombination.GROUP_FILE_MESSAGE, new GroupFileMessageExecution());
+			put(MessageTypeCombination.GROUP_TEXT_MESSAGE, new GroupTextMessageExecution());
 		}
 	};
 
-	public static IMessageExcution getMessageExcutionByType(long messageType) {
+	public static IMessageExecution getMessageExcutionByType(long messageType) {
 		return messageExcutions.get(messageType);
 	}
 

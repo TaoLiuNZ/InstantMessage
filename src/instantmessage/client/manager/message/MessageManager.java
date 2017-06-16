@@ -116,8 +116,8 @@ public class MessageManager {
 	 * @param fileSize
 	 * @return
 	 */
-	public static String receiveFile(Socket socket, String fileName, long fileSize) {
-		String localFilePath = FileHelper.getReceivedFilePath(fileName);
+	public static String receiveFile(Socket socket, String fileName, long fileSize,String...folderNames) {
+		String localFilePath = FileHelper.getPath(fileName,folderNames);
 
 		try {
 			int bytesRead;
