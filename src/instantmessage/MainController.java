@@ -15,7 +15,6 @@ public class MainController {
 	
 	@FXML
 	private void startServerBtnAction(ActionEvent event){
-
 		FxUIHelper.openNewWindow(this,"/instantmessage/server/ui/ServerUI.fxml");
 	}
 	@FXML

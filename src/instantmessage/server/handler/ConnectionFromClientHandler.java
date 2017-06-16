@@ -17,12 +17,14 @@ public class ConnectionFromClientHandler extends Thread {
 	private Socket socket;
 	private ServerUIController controller;
 	private Boolean isRunning;
+	private String IpAddress;
 
 	// Constructor
 	public ConnectionFromClientHandler(Socket socket, ServerUIController controller) {
 		this.socket = socket;
 		this.controller = controller;
 		this.isRunning = true;
+		this.IpAddress=socket.getRemoteSocketAddress().toString();
 	}
 
 	/**
@@ -32,6 +34,15 @@ public class ConnectionFromClientHandler extends Thread {
 	 */
 	public Socket getSocket() {
 		return this.socket;
+	}
+	
+	/**
+	 * Get IpAddress
+	 * 
+	 * @return
+	 */
+	public String getIpAddress() {
+		return this.IpAddress;
 	}
 
 	@Override

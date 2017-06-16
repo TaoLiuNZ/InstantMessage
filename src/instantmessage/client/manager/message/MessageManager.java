@@ -33,7 +33,7 @@ public class MessageManager {
 	};
 
 	/**
-	 * Get message excution by type
+	 * Get message execution by type
 	 * 
 	 * @param messageType
 	 * @return

@@ -2,6 +2,7 @@ package instantmessage.server.manager.message;
 
 import java.net.Socket;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 
 import instantmessage.server.handler.ConnectionFromClientHandler;
 import instantmessage.server.manager.ClientConnectionManager;
@@ -9,6 +10,12 @@ import instantmessage.server.model.GroupTextMessage;
 import instantmessage.server.model.Message;
 import instantmessage.server.ui.ServerUIController;
 
+/**
+ * Execution for GroupTextMessage
+ * 
+ * @author Tao Liu
+ *
+ */
 public class GroupTextMessageExecution implements IMessageExecution {
 
 	@Override
@@ -33,7 +40,7 @@ public class GroupTextMessageExecution implements IMessageExecution {
 		Message message = new GroupTextMessage(uid, msg);
 
 		// Send back to all clients
-		HashMap<String, HashMap<String, ConnectionFromClientHandler>> clients = ClientConnectionManager
+		HashMap<String, LinkedHashMap<String, ConnectionFromClientHandler>> clients = ClientConnectionManager
 				.getInstance(controller).getClientsList();
 		for (HashMap<String, ConnectionFromClientHandler> singleClientMultipleConnections : clients.values()) {
 			for (ConnectionFromClientHandler client : singleClientMultipleConnections.values()) {

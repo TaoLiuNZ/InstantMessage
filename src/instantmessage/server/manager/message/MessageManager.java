@@ -11,6 +11,12 @@ import java.util.HashMap;
 
 import instantmessage.server.constant.MessageTypeCombination;
 
+/**
+ * A class to manage sockets and different types of messages
+ * 
+ * @author Tao Liu
+ *
+ */
 public class MessageManager {
 
 	private static HashMap<Long, IMessageExecution> messageExcutions = new HashMap<Long, IMessageExecution>() {
@@ -22,43 +28,70 @@ public class MessageManager {
 		}
 	};
 
+	/**
+	 * Get message execution by type
+	 * 
+	 * @param messageType
+	 * @return
+	 */
 	public static IMessageExecution getMessageExcutionByType(long messageType) {
 		return messageExcutions.get(messageType);
 	}
 
+	/**
+	 * Send long
+	 * 
+	 * @param socket
+	 * @param arg
+	 */
 	public static void sendLong(Socket socket, long arg) {
 
 		try {
 			getDataOutputStream(socket).writeLong(arg);
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
 
+	/**
+	 * Send text
+	 * 
+	 * @param socket
+	 * @param text
+	 */
 	public static void sendText(Socket socket, String text) {
 		try {
 			getDataOutputStream(socket).writeUTF(text);
 
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
+
+	/**
+	 * Send Boolean
+	 * 
+	 * @param socket
+	 * @param boolean
+	 */
 	public static void sendBoolean(Socket socket, Boolean value) {
 		try {
 			getDataOutputStream(socket).writeBoolean(value);
 
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
 
+	/**
+	 * Send file
+	 * 
+	 * @param socket
+	 * @param filePath
+	 */
 	public static void sendFile(Socket socket, String fileName, byte[] fileByteData) {
 
 		try {
-
 			OutputStream os = socket.getOutputStream();
 
 			// Sending file name and file size to the server
@@ -69,14 +102,20 @@ public class MessageManager {
 			dos.flush();
 
 		} catch (FileNotFoundException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
 
+	/**
+	 * Receive Byte data
+	 * 
+	 * @param socket
+	 * @param fileName
+	 * @param fileSize
+	 * @return
+	 */
 	public static byte[] receiveByteData(Socket socket, String fileName, long fileSize) {
 		byte[] data = null;
 
@@ -102,44 +141,64 @@ public class MessageManager {
 		return data;
 	}
 
+	/**
+	 * Receive long
+	 * 
+	 * @param socket
+	 * @return
+	 */
 	public static Long receiveLong(Socket socket) {
 		try {
 			Long value = getDataInputStream(socket).readLong();
 			return value;
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		return null;
 	}
 
+	/**
+	 * Receive text
+	 * 
+	 * @param socket
+	 * @return
+	 */
 	public static String receiveText(Socket socket) {
 		try {
 			return getDataInputStream(socket).readUTF();
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		return null;
 	}
 
+	/**
+	 * Get DataInputStream from socket
+	 * 
+	 * @param socket
+	 * @return
+	 */
 	private static DataInputStream getDataInputStream(Socket socket) {
 		try {
 			return new DataInputStream(socket.getInputStream());
 
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		return null;
 	}
 
+	/**
+	 * Get DataOutputStream from socket
+	 * 
+	 * @param socket
+	 * @return
+	 */
 	private static DataOutputStream getDataOutputStream(Socket socket) {
 		try {
 			return new DataOutputStream(socket.getOutputStream());
 
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		return null;

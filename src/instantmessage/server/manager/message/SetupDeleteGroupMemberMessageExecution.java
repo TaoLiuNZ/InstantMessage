@@ -2,6 +2,7 @@ package instantmessage.server.manager.message;
 
 import java.net.Socket;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Map.Entry;
 
 import instantmessage.server.handler.ConnectionFromClientHandler;
@@ -10,6 +11,12 @@ import instantmessage.server.model.Message;
 import instantmessage.server.model.SetupDeleteGroupMemberMessage;
 import instantmessage.server.ui.ServerUIController;
 
+/**
+ * Execution for SetupDeleteGroupMemberMessage
+ * 
+ * @author Tao Liu
+ *
+ */
 public class SetupDeleteGroupMemberMessageExecution implements IMessageExecution {
 
 	@Override
@@ -28,7 +35,7 @@ public class SetupDeleteGroupMemberMessageExecution implements IMessageExecution
 		String uid = MessageManager.receiveText(socket);
 		String connectionId = MessageManager.receiveText(socket);
 
-		HashMap<String, HashMap<String, ConnectionFromClientHandler>> clients = ClientConnectionManager
+		HashMap<String, LinkedHashMap<String, ConnectionFromClientHandler>> clients = ClientConnectionManager
 				.getInstance(controller).getClientsList();
 		
 		// Remove from clients list

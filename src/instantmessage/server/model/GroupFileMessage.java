@@ -2,42 +2,39 @@ package instantmessage.server.model;
 
 import instantmessage.server.constant.MessageTypeCombination;
 
+
+/**
+ * GroupFileMessage model
+ * @author Tao Liu
+ *
+ */
 public class GroupFileMessage extends Message {
+	
+	// Fields
 	private String fileName;
 	private byte[] fileByteData;
 
+	// Constructor
 	public GroupFileMessage(String senderUid, String fileName, byte[] fileByteData) {
 		super(MessageTypeCombination.GROUP_FILE_MESSAGE, senderUid);
 		this.setFileName(fileName);
 		this.setFileByteData(fileByteData);
 	}
 
-	/**
-	 * @return the fileName
-	 */
+	// Getters and setters
+
 	public String getFileName() {
 		return fileName;
 	}
 
-	/**
-	 * @param fileName
-	 *            the fileName to set
-	 */
 	public void setFileName(String fileName) {
 		this.fileName = fileName;
 	}
 
-	/**
-	 * @return the fileByteData
-	 */
 	public byte[] getFileByteData() {
 		return fileByteData;
 	}
 
-	/**
-	 * @param fileByteData
-	 *            the fileByteData to set
-	 */
 	public void setFileByteData(byte[] fileByteData) {
 		this.fileByteData = fileByteData;
 	}

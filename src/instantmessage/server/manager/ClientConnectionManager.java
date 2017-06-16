@@ -2,6 +2,7 @@ package instantmessage.server.manager;
 
 import java.net.Socket;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 
 import instantmessage.server.handler.ConnectionFromClientHandler;
 import instantmessage.server.manager.message.MessageManager;
@@ -16,7 +17,7 @@ import instantmessage.server.ui.ServerUIController;
 public class ClientConnectionManager {
 
 	// Fields
-	private static HashMap<String, HashMap<String, ConnectionFromClientHandler>> clientsList;
+	private static HashMap<String, LinkedHashMap<String, ConnectionFromClientHandler>> clientsList;
 	private static ServerUIController serverUIController;
 	private static ClientConnectionManager instance = null;
 
@@ -29,7 +30,7 @@ public class ClientConnectionManager {
 	public static ClientConnectionManager getInstance(ServerUIController controller) {
 		if (instance == null) {
 			instance = new ClientConnectionManager();
-			clientsList = new HashMap<String, HashMap<String, ConnectionFromClientHandler>>();
+			clientsList = new HashMap<String, LinkedHashMap<String, ConnectionFromClientHandler>>();
 			serverUIController = controller;
 		}
 		return instance;
@@ -50,7 +51,7 @@ public class ClientConnectionManager {
 	 * Get current connected clients list
 	 * @return
 	 */
-	public HashMap<String, HashMap<String, ConnectionFromClientHandler>> getClientsList() {
+	public HashMap<String, LinkedHashMap<String, ConnectionFromClientHandler>> getClientsList() {
 		return ClientConnectionManager.clientsList;
 	}
 
