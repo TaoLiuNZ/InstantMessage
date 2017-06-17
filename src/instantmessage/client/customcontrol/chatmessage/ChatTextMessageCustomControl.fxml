@@ -14,7 +14,7 @@
       <RowConstraints />
    </rowConstraints>
    <columnConstraints>
-      <ColumnConstraints hgrow="NEVER" minWidth="10.0" prefWidth="50.0" />
+      <ColumnConstraints hgrow="NEVER" maxWidth="50.0" minWidth="50.0" prefWidth="50.0" />
       <ColumnConstraints hgrow="ALWAYS" />
    </columnConstraints>
    <children>
@@ -24,7 +24,7 @@
          </image>
       </ImageView>
       <Label fx:id="displayNameLabel" text="Chris" GridPane.columnIndex="1" GridPane.halignment="LEFT" GridPane.valignment="CENTER" />
-      <Label fx:id="chatMessageLabel" style="-fx-background-radius: 0 20 20 20;" styleClass="chat_message" stylesheets="@../../../../../css/chatmessage.css" text="Hi, How are you?" GridPane.columnIndex="1" GridPane.rowIndex="1">
+      <Label fx:id="chatMessageLabel" nodeOrientation="LEFT_TO_RIGHT" style="-fx-background-radius: 0 20 20 20;" styleClass="chat_message" stylesheets="@../../../../../css/chatmessage.css" text="Hi, How are you?" wrapText="true" GridPane.columnIndex="1" GridPane.rowIndex="1">
          <padding>
             <Insets bottom="5.0" left="10.0" right="10.0" top="5.0" />
          </padding>

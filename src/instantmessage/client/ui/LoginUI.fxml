@@ -27,8 +27,8 @@
          </columnConstraints>
          <children>
             <Button fx:id="loginBtn" mnemonicParsing="false" onAction="#loginBtnAction" prefWidth="250.0" styleClass="button-flat" text="Sign In" GridPane.columnSpan="2" GridPane.halignment="CENTER" GridPane.rowIndex="4" GridPane.valignment="CENTER" />
-            <TextField fx:id="userNameTextField" promptText="User Name" text="chris" GridPane.rowIndex="1" GridPane.valignment="BOTTOM" />
-            <PasswordField fx:id="passwordTextField" onKeyPressed="#passwordTextFieldKeyPressed" promptText="Password" text="chris" GridPane.rowIndex="2" GridPane.valignment="BOTTOM" />
+            <TextField fx:id="userNameTextField" promptText="User Name" text="" GridPane.rowIndex="1" GridPane.valignment="BOTTOM" />
+            <PasswordField fx:id="passwordTextField" onKeyPressed="#passwordTextFieldKeyPressed" promptText="Password" text="" GridPane.rowIndex="2" GridPane.valignment="BOTTOM" />
             <Label fx:id="errorLabel" style="-fx-text-fill: red;" text="Label" visible="false" GridPane.columnSpan="2" GridPane.rowIndex="3" />
             <GridPane hgap="10.0">
               <columnConstraints>

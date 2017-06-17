@@ -75,15 +75,65 @@ public class GroupChatUIController implements IUIController {
 	 * @param currentUser
 	 */
 	public void Init(User currentUser) {
-		SetListeners();
+		setListeners();
 		setUIData(currentUser);
 		startConnectingToServer();
+	}
+	
+	/**
+	 * Add chat message to the UI
+	 * 
+	 * @param viewModel
+	 */
+	public void addChatMessage(ChatMessageViewModel viewModel) {
+		// Check the block list
+		UserTagCustomControl user = groupMembers.get(viewModel.getUid());
+		if (user != null && user.getUserTagViewModel().getIsBlocked())
+			return;
+
+		// Check if this message is from user himself
+		// If true, set orientation to right
+		if (viewModel.getUid().equals(currentUser.getUid())) {
+			viewModel.setOrientation(Orientation.RIGHT_TO_LEFT);
+		}
+
+		// Message custom control
+		ChatMessageCustomControl chatMsg = ChatMessageCustomControlManager.getChatMessageCustomControlByType(viewModel);
+		FxUIHelper.addElementToParent(chatMessageContainerVBox, chatMsg);
+	}
+
+	/**
+	 * Add user tag to UI
+	 * 
+	 * @param viewModel
+	 */
+	public void addUserTag(UserTagViewModel viewModel) {
+		// Add a user tag
+		UserTagCustomControl userTag = new UserTagCustomControl(viewModel);
+		FxUIHelper.addElementToParent(userTagContainerVBox, userTag);
+		
+		// Add to group members list
+		groupMembers.put(viewModel.getUid(), userTag);
+	}
+
+	/**
+	 * Remove user tag from UI
+	 * 
+	 * @param viewModel
+	 */
+	public void removeUserTag(UserTagViewModel viewModel) {
+		// Remove from UI
+		UserTagCustomControl userTag = groupMembers.get(viewModel.getUid());
+		FxUIHelper.removeElementFromParent(userTagContainerVBox, userTag);
+
+		// Remove from group members list
+		groupMembers.remove(viewModel.getUid());
 	}
 
 	/**
 	 * Set listeners
 	 */
-	private void SetListeners() {
+	private void setListeners() {
 		// Make sure when a new message is added to the container,
 		// it automatically scrolls down to the bottom
 		chatMessageContainerVBox.heightProperty().addListener(new ChangeListener<Number>() {
@@ -150,56 +200,6 @@ public class GroupChatUIController implements IUIController {
 		// Send current client info to server to deregister
 		Message message = new SetupDeleteGroupMemberMessage(currentUser.getUid(),connectionId);
 		MessageManager.getMessageExecutionByType(message.getMessageType()).sendMessageToServer(socket, message);
-	}
-
-	/**
-	 * Add chat message to the UI
-	 * 
-	 * @param viewModel
-	 */
-	public void addChatMessage(ChatMessageViewModel viewModel) {
-		// Check the block list
-		UserTagCustomControl user = groupMembers.get(viewModel.getUid());
-		if (user != null && user.getUserTagViewModel().getIsBlocked())
-			return;
-
-		// Check if this message is from user himself
-		// If true, set orientation to right
-		if (viewModel.getUid().equals(currentUser.getUid())) {
-			viewModel.setOrientation(Orientation.RIGHT_TO_LEFT);
-		}
-
-		// Message custom control
-		ChatMessageCustomControl chatMsg = ChatMessageCustomControlManager.getChatMessageCustomControlByType(viewModel);
-		FxUIHelper.addElementToParent(chatMessageContainerVBox, chatMsg);
-	}
-
-	/**
-	 * Add user tag to UI
-	 * 
-	 * @param viewModel
-	 */
-	public void addUserTag(UserTagViewModel viewModel) {
-		// Add a user tag
-		UserTagCustomControl userTag = new UserTagCustomControl(viewModel);
-		FxUIHelper.addElementToParent(userTagContainerVBox, userTag);
-		
-		// Add to group members list
-		groupMembers.put(viewModel.getUid(), userTag);
-	}
-
-	/**
-	 * Remove user tag from UI
-	 * 
-	 * @param viewModel
-	 */
-	public void removeUserTag(UserTagViewModel viewModel) {
-		// Remove from UI
-		UserTagCustomControl userTag = groupMembers.get(viewModel.getUid());
-		FxUIHelper.removeElementFromParent(userTagContainerVBox, userTag);
-
-		// Remove from group members list
-		groupMembers.remove(viewModel.getUid());
 	}
 
 	/**
